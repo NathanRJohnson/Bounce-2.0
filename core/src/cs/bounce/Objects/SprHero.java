@@ -18,7 +18,7 @@ public class SprHero extends Sprite {
         v2CurrentPos = new Vector2(v2Loc);
         nJumpState = 0;
         //setPosition(v2Loc.x, v2Loc.y);
-        setSize(50, 50);
+        setSize(100, 100);
         setFlip(true, false);
 
     }

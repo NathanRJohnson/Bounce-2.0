@@ -41,14 +41,14 @@ public class ScrLvl1 implements Screen, InputProcessor {
         batch = new SpriteBatch();
         //Textures
         txCity = new Texture("bg_city.png");
-        txJumper = new Texture("jumper.png");
-        txFloor = new Texture("city_ground.png");
+        txJumper = new Texture("hero_yeetgirl.png");
+        //txFloor = new Texture("city_ground.png");
         //Backgrounds
         bgCity = new SprBackground(txCity);
         //Jumper
         sphHero = new SprHero(txJumper, 200,100);
         //Floor
-        flGround = new SprFloor(txFloor);
+      //  flGround = new SprFloor(txFloor);
         //Vector
         v2Gravity = new Vector2(0,-1);
         v2Normal = new Vector2(0,1);
@@ -59,10 +59,10 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void render(float delta) {
         batch.begin();
         bgCity.draw(batch);
-        flGround.draw(batch);
+      //  flGround.draw(batch);
         sphHero.draw(batch);
         batch.end();
-        flGround.floor(sphHero,v2Gravity);
+       // flGround.floor(sphHero,v2Gravity);
         sphHero.Update();
 
     }
