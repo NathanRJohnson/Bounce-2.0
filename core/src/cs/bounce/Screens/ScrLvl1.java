@@ -46,7 +46,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         //Backgrounds
         bgCity = new SprBackground(txCity);
         //Jumper
-        sphHero = new SprHero(txJumper, 200,100);
+        sphHero = new SprHero(txJumper, 200,150);
         //Floor
         flGround = new SprFloor(txFloor);
         //Vector

@@ -1,10 +1,11 @@
 package cs.bounce.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-public class SprHero extends Sprite {
+public class SprHero extends Sprite implements InputProcessor {
     public Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos;
     float fmaxHeight;
@@ -19,13 +20,14 @@ public class SprHero extends Sprite {
         //setPosition(v2Loc.x, v2Loc.y);
         setSize(100, 100);
         setFlip(true, false);
-        canJump = false;
+        canJump = true;
 
     }
     public void Update()//Grouping Function
     {
         move();
         jump();
+        System.out.println(canJump);
     }
 
     void checkMove() {
@@ -50,20 +52,34 @@ public class SprHero extends Sprite {
     }
 
     void jump() {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if (v2Loc.y < fmaxHeight)
+                v2Acc.y = 10;
+
         if (canJump == true) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
                 v2CurrentPos.equals(v2Loc);
                 fmaxHeight = v2CurrentPos.y + 100;
+                canJump = false;
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                if (v2Loc.y < fmaxHeight)
-                    v2Acc.y = 10;
+            if (keyDown(87)) {
+                v2CurrentPos.equals(v2Loc);
+                fmaxHeight = v2CurrentPos.y + 100;
+                canJump = false;
+            }
+
+            if (keyUp(87)) {
+                canJump = false;
+            }
+
 
             }
             if (v2Loc.y >= fmaxHeight) {
                 System.out.println("YEEEET");
                 canJump = false;
+
             }
         }
     }
@@ -72,6 +88,46 @@ public class SprHero extends Sprite {
         Vector2 v2Copy = v.cpy();
         v2Acc.add(v2Copy);
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
 
