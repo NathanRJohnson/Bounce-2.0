@@ -2,6 +2,7 @@ package cs.bounce.Screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Objects.SprBackground;
@@ -15,7 +16,7 @@ public class ScrStart implements Screen, InputProcessor {
     SprBackground bgStart;
     OrthographicCamera oc;
     Vector2 vMouse;
-
+    Texture txStart;
 
     public ScrStart(GamMain main) {
         this.main = main;
@@ -30,12 +31,12 @@ public class ScrStart implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         //Textures
-
+        txStart = new Texture("bg_start.jpg");
         //Sprites
 
         batch = new SpriteBatch();
         //SprBackground
-        bgStart = new SprBackground(0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), "bg_start.jpg");
+        bgStart = new SprBackground(txStart);
 
         //Buttons
         btnStart = new SprButton(200,200,200, 200,"start_button.png");

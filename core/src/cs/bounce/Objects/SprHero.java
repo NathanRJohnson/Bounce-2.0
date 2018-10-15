@@ -23,7 +23,7 @@ public class SprHero extends Sprite implements InputProcessor {
         canJump = true;
 
     }
-    public void Update()//Grouping Function
+    public void update()//Grouping Function
     {
         move();
         jump();

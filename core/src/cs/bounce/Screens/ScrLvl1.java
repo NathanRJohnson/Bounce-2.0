@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import cs.bounce.GamMenu;
+import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprFloor;
 import cs.bounce.Objects.SprHero;
 
 
 public class ScrLvl1 implements Screen, InputProcessor {
-    GamMenu main;
+    GamMain main;
     SpriteBatch batch;
     //Textures
     Texture txCity;
@@ -31,7 +31,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     //Vectors
     Vector2 v2Gravity, v2Normal;
 
-    public ScrLvl1(GamMenu _main) {
+    public ScrLvl1(GamMain _main) {
         main = _main;
     }
 
@@ -63,7 +63,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero.draw(batch);
         batch.end();
         flGround.floor(sphHero,v2Gravity);
-        sphHero.Update();
+        sphHero.update();
 
     }
 
