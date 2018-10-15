@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 public class SprHero extends Sprite {
     public Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos;
-    int nJumpState;
     float fmaxHeight;
+    boolean canJump;
 
     public SprHero(Texture tx, float _fX, float _fY){
         super(tx);
@@ -16,10 +16,10 @@ public class SprHero extends Sprite {
         v2Vel = new Vector2(0, 0);
         v2Acc = new Vector2(0, 0);
         v2CurrentPos = new Vector2(v2Loc);
-        nJumpState = 0;
         //setPosition(v2Loc.x, v2Loc.y);
         setSize(100, 100);
         setFlip(true, false);
+        canJump = false;
 
     }
     public void Update()//Grouping Function
@@ -50,22 +50,21 @@ public class SprHero extends Sprite {
     }
 
     void jump() {
+        if (canJump == true) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+                v2CurrentPos.equals(v2Loc);
+                fmaxHeight = v2CurrentPos.y + 100;
+            }
 
-        System.out.println( nJumpState);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            v2CurrentPos.equals(v2Loc);
-            fmaxHeight = v2CurrentPos.y + 100;
-            nJumpState = 1;
-        }
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                if (v2Loc.y < fmaxHeight)
+                    v2Acc.y = 10;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.W)&& nJumpState == 1) {
-            if (v2Loc.y < fmaxHeight)
-                v2Acc.y = 10;
-
-        }
-        if (v2Loc.y >= fmaxHeight){
-            nJumpState = 0;
-            System.out.println("YEEEET");
+            }
+            if (v2Loc.y >= fmaxHeight) {
+                System.out.println("YEEEET");
+                canJump = false;
+            }
         }
     }
 

@@ -24,6 +24,7 @@ public class SprFloor extends Sprite {
 
         if (s.getBoundingRectangle().overlaps(rctGround) && !Gdx.input.isKeyPressed((Input.Keys.W)) ){
             s.v2Loc.y = 45;
+            s.canJump = true;
             if (s.v2Acc.y != 0) {
                 s.v2Acc.setZero();
                 System.out.println("trigger");
