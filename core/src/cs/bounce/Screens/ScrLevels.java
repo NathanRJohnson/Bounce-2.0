@@ -13,7 +13,7 @@ import cs.bounce.Menu.GamMain;
 public class ScrLevels implements Screen, InputProcessor {
     SpriteBatch batch;
     GamMain main;
-    SprButton btnLvl1, btnBack;
+    SprButton btnLvl1,  btnLvl2, btnBack;
     OrthographicCamera oc;
     Vector2 vMouse;
     Texture txbgLevels;
@@ -40,8 +40,9 @@ public class ScrLevels implements Screen, InputProcessor {
         //SprBackground
 
         //Buttons
-        btnBack = new SprButton(50,50,200, 200,"back.png");
-        btnLvl1 = new SprButton(350,50,200, 200,"lvl1_select.png");
+        btnBack = new SprButton(0,0,100, 100,"back.png");
+        btnLvl1 = new SprButton(50,150,100, 100,"lvl1_select.png");
+        btnLvl2 = new SprButton(200,150,100, 100,"lvl2_select.png");
         //Mouse
         vMouse = new Vector2(0,0);
 
@@ -54,6 +55,7 @@ public class ScrLevels implements Screen, InputProcessor {
         changeScreen();
         sprbgLevels.draw(batch);
         btnLvl1.draw(batch);
+        btnLvl2.draw(batch);
         btnBack.draw(batch);
         batch.end();
     }
@@ -63,6 +65,10 @@ public class ScrLevels implements Screen, InputProcessor {
             if (btnLvl1.isMousedOver()) {
                 System.out.println("Level 1");
                 main.updateScreen(2);
+            }
+            if (btnLvl2.isMousedOver()) {
+                System.out.println("Level 2");
+                main.updateScreen(3);
             }
             if (btnBack.isMousedOver()) {
                 System.out.println("Start Screen");

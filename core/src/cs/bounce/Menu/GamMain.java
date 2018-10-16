@@ -10,6 +10,7 @@ public class GamMain extends Game {
 
 	ScrLevels scrLevels;
 	ScrLvl1 scrLvl1;
+	ScrLvl2 scrLvl2;
 	ScrStart scrStart;
 
 	int nScreen;
@@ -23,7 +24,10 @@ public class GamMain extends Game {
 			setScreen(scrLevels);
 		} else if (nScreen == 2) {
 			setScreen(scrLvl1);
+		} else if (nScreen == 3) {
+			setScreen(scrLvl2);
 		}
+
 	}
 	/*
         public boolean Menu() {
@@ -39,7 +43,7 @@ public class GamMain extends Game {
 			scrStart = new ScrStart(this);
 			scrLevels = new ScrLevels(this);
 			scrLvl1 = new ScrLvl1(this);
-			//scrLvl2 = new ScrLvl2(this);
+			scrLvl2 = new ScrLvl2(this);
 			//scrLvl3 =new ScrLvl3(this);
 			updateScreen(0);
 		}
