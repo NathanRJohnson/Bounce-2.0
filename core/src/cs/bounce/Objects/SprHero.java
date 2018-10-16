@@ -5,11 +5,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+
 public class SprHero extends Sprite implements InputProcessor {
     public Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos;
     float fmaxHeight;
-    boolean canJump;
+    boolean canJump, isInAir;
+    int nKeyCodeW = (int)'w';
 
     public SprHero(Texture tx, float _fX, float _fY){
         super(tx);
@@ -21,13 +23,16 @@ public class SprHero extends Sprite implements InputProcessor {
         setSize(100, 100);
         setFlip(true, false);
         canJump = true;
+        isInAir = false;
+        v2CurrentPos.equals(v2Loc);
+        fmaxHeight = v2CurrentPos.y + 100;
 
     }
     public void update()//Grouping Function
     {
         move();
         jump();
-        System.out.println(canJump);
+       // System.out.println(canJump);
     }
 
     void checkMove() {
@@ -53,27 +58,20 @@ public class SprHero extends Sprite implements InputProcessor {
 
     void jump() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            if (v2Loc.y < fmaxHeight)
-                v2Acc.y = 10;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+        v2CurrentPos.equals(v2Loc);
+        fmaxHeight = v2CurrentPos.y + 100;
+
+       // canJump = true;
+    }
 
         if (canJump == true) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-                v2CurrentPos.equals(v2Loc);
-                fmaxHeight = v2CurrentPos.y + 100;
-                canJump = false;
-            }
 
-            if (keyDown(87)) {
-                v2CurrentPos.equals(v2Loc);
-                fmaxHeight = v2CurrentPos.y + 100;
-                canJump = false;
+            if (Gdx.input.isKeyPressed(Input.Keys.W) && isInAir == false) {
+                if (v2Loc.y < fmaxHeight)
+                    v2Acc.y = 10;
+                    isInAir = true;
             }
-
-            if (keyUp(87)) {
-                canJump = false;
-            }
-
 
             }
             if (v2Loc.y >= fmaxHeight) {
@@ -81,7 +79,6 @@ public class SprHero extends Sprite implements InputProcessor {
                 canJump = false;
 
             }
-        }
     }
 
     public void applyForce(Vector2 v) {
