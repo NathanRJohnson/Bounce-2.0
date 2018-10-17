@@ -54,7 +54,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         //Floor
         flGround = new SprFloor(txFloor);
         //Obstacle
-        spoWall = new SprObstacle(100, 50, 100, 50, "wall.jpg");
+        spoWall = new SprObstacle(100, 50, 100, 600, "wall.jpg");
         spoSpike = new SprObstacle(400, 50, 100, 50, "spikes.png");
         //Vector
         v2Gravity = new Vector2(0, -1);
@@ -73,30 +73,8 @@ public class ScrLvl2 implements Screen, InputProcessor {
         batch.end();
         flGround.floor(sphHero);
         sphHero.update();
-        isHit(spoWall);
-        isKilled(spoSpike);
-    }
-
-    //Used for walls, platforms etc. (it stops the heros movement)
-    public void isHit(SprObstacle obstacle) {
-
-        if (sphHero.getBoundingRectangle().overlaps(obstacle.getBoundingRectangle())) {
-
-            System.out.println("There is a wall here");
-            sphHero.v2Loc.set(v2PrevLoc);
-        } else {
-            v2PrevLoc = sphHero.v2Loc.cpy();
-        }
-    }
-
-    //Used for harmful obstacles such as spikes (eventually this will trigger his death)
-    public boolean isKilled(SprObstacle obstacle) {
-        if (sphHero.getBoundingRectangle().overlaps(obstacle.getBoundingRectangle())) {
-            System.out.println("You dead");
-            return true;
-        } else {
-            return false;
-        }
+        spoWall.isHit(sphHero);
+        spoSpike.isKilled(sphHero);
     }
 
     //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them
