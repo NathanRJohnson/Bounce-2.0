@@ -45,7 +45,8 @@ public class ScrLevels implements Screen, InputProcessor {
         btnLvl2 = new SprButton(200,150,100, 100,"lvl2_select.png");
         //Mouse
         vMouse = new Vector2(0,0);
-
+        System.out.println("Level 1 is just Gravity");
+        System.out.println("Level 2 has hit testing");
     }
 
     @Override
