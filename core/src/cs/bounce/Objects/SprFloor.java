@@ -19,20 +19,29 @@ public class SprFloor extends Sprite {
         nState = 0;
     }
 
-    public void floor(SprHero s, Vector2 v)
+    public void floor(SprHero s)
     {
 
-        if (s.getBoundingRectangle().overlaps(rctGround) && !Gdx.input.isKeyPressed((Input.Keys.W)) ){
+        if (s.getBoundingRectangle().overlaps(rctGround) && !Gdx.input.isKeyPressed((Input.Keys.W))){
             s.v2Loc.y = 45;
             s.canJump = true;
-            s.isInAir = false;
+            s.isAirborn = false;
             if (s.v2Acc.y != 0) {
                 s.v2Acc.setZero();
-                System.out.println("trigger");
+
             }
+            //   }
             //System.out.println("can i get uhh");
+        } else if (s.getBoundingRectangle().overlaps(rctGround) && Gdx.input.isKeyPressed((Input.Keys.W)) && s.isAirborn == true ) {
+            s.v2Loc.y = 45;
+            s.canJump = true;
+            s.isAirborn = false;
+            if (s.v2Acc.y != 0) {
+                s.v2Acc.setZero();
+
+            }
         } else {
-            s.applyForce(v);
+            s.isAirborn = true;
         }
 
     }

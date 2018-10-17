@@ -29,7 +29,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     //Floor
     SprFloor flGround;
     //Vectors
-    Vector2 v2Gravity, v2Normal;
+    Vector2 v2Normal;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
@@ -50,7 +50,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         //Floor
         flGround = new SprFloor(txFloor);
         //Vector
-        v2Gravity = new Vector2(0,-1);
+
         v2Normal = new Vector2(0,1);
 
     }
@@ -62,7 +62,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         flGround.draw(batch);
         sphHero.draw(batch);
         batch.end();
-        flGround.floor(sphHero,v2Gravity);
+        flGround.floor(sphHero);
         sphHero.update();
 
     }
@@ -89,7 +89,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+    sphHero.getTexture().dispose();
+    bgCity.getTexture().dispose();
+    flGround.getTexture().dispose();
     }
 
     @Override

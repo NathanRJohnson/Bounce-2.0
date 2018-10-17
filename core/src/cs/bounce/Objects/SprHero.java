@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class SprHero extends Sprite implements InputProcessor {
     public Vector2 v2Loc, v2Vel, v2Acc;
-    Vector2 v2CurrentPos;
+    Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
-    boolean canJump, isInAir;
+    boolean canJump, isAirborn;
     int nKeyCodeW = (int)'w';
 
     public SprHero(Texture tx, float _fX, float _fY){
@@ -19,11 +19,12 @@ public class SprHero extends Sprite implements InputProcessor {
         v2Vel = new Vector2(0, 0);
         v2Acc = new Vector2(0, 0);
         v2CurrentPos = new Vector2(v2Loc);
+        v2Gravity = new Vector2(0,-1);
         //setPosition(v2Loc.x, v2Loc.y);
         setSize(100, 100);
         setFlip(true, false);
         canJump = true;
-        isInAir = false;
+        isAirborn = false;
         v2CurrentPos.equals(v2Loc);
         fmaxHeight = v2CurrentPos.y + 100;
 
@@ -32,6 +33,7 @@ public class SprHero extends Sprite implements InputProcessor {
     {
         move();
         jump();
+        applyForce(v2Gravity);
        // System.out.println(canJump);
     }
 
@@ -59,26 +61,29 @@ public class SprHero extends Sprite implements InputProcessor {
     void jump() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-        v2CurrentPos.equals(v2Loc);
-        fmaxHeight = v2CurrentPos.y + 100;
+            v2CurrentPos.equals(v2Loc);
+            fmaxHeight = v2CurrentPos.y + 40;
+            isAirborn = true;
 
-       // canJump = true;
-    }
-
+        }
         if (canJump == true) {
 
-            if (Gdx.input.isKeyPressed(Input.Keys.W) && isInAir == false) {
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 if (v2Loc.y < fmaxHeight)
-                    v2Acc.y = 10;
-                    isInAir = true;
-            }
+                    v2Acc.y = 18;
 
             }
-            if (v2Loc.y >= fmaxHeight) {
-                System.out.println("YEEEET");
+
+            if (!Gdx.input.isKeyPressed(Input.Keys.W) && isAirborn == true){
                 canJump = false;
+            }
+
+            if (v2Loc.y >= fmaxHeight) {
+                canJump = false;
+                isAirborn = true;
 
             }
+        }
     }
 
     public void applyForce(Vector2 v) {

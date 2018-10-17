@@ -71,7 +71,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         spoSpike.draw(batch);
         spoWall.draw(batch);
         batch.end();
-        flGround.floor(sphHero,v2Gravity);
+        flGround.floor(sphHero);
         sphHero.update();
         isHit(spoWall);
         isKilled(spoSpike);
