@@ -33,7 +33,6 @@ public class ScrLvl2 implements Screen, InputProcessor {
     SprFloor flGround;
     //Vectors
     Vector2 v2Gravity, v2Normal;
-    Vector2 v2PrevLoc = new Vector2(0, 0);
 
     public ScrLvl2(GamMain _main) {
         main = _main;
@@ -54,7 +53,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         //Floor
         flGround = new SprFloor(txFloor);
         //Obstacle
-        spoWall = new SprObstacle(100, 50, 100, 600, "wall.jpg");
+        spoWall = new SprObstacle(100, 50, 100, 100, "wall.jpg");
         spoSpike = new SprObstacle(400, 50, 100, 50, "spikes.png");
         //Vector
         v2Gravity = new Vector2(0, -1);
@@ -77,6 +76,10 @@ public class ScrLvl2 implements Screen, InputProcessor {
         spoSpike.isKilled(sphHero);
     }
 
+   /* if (isHit == true){
+
+    }
+*/
     //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them
     @Override
     public void resize(int width, int height) {
@@ -101,7 +104,6 @@ public class ScrLvl2 implements Screen, InputProcessor {
     @Override
     public void dispose() {
         sphHero.getTexture().dispose();
-
     }
 
     @Override
