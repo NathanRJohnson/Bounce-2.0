@@ -26,6 +26,7 @@ public class SprFloor extends Sprite {
             s.v2Loc.y = 45;
             s.canJump = true;
             s.isAirborn = false;
+            s.isGrounded = true;
             if (s.v2Acc.y != 0) {
                 s.v2Acc.setZero();
 
@@ -36,12 +37,14 @@ public class SprFloor extends Sprite {
             s.v2Loc.y = 45;
             s.canJump = true;
             s.isAirborn = false;
+            s.isGrounded = true;
             if (s.v2Acc.y != 0) {
                 s.v2Acc.setZero();
 
             }
-        } else {
+        } else if(s.isGrounded == false){
             s.isAirborn = true;
+            s.canJump = false;
         }
 
     }

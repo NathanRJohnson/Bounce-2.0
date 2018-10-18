@@ -10,8 +10,8 @@ public class SprHero extends Sprite implements InputProcessor {
     public Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
-    boolean canJump, isAirborn;
-    int nKeyCodeW = (int)'w';
+    boolean canJump, isAirborn, isGrounded;
+
 
     public SprHero(Texture tx, float _fX, float _fY){
         super(tx);
@@ -25,6 +25,7 @@ public class SprHero extends Sprite implements InputProcessor {
         setFlip(true, false);
         canJump = true;
         isAirborn = false;
+        isGrounded = false;
         v2CurrentPos.equals(v2Loc);
         fmaxHeight = v2CurrentPos.y + 100;
 
@@ -64,6 +65,7 @@ public class SprHero extends Sprite implements InputProcessor {
             v2CurrentPos.equals(v2Loc);
             fmaxHeight = v2CurrentPos.y + 40;
             isAirborn = true;
+            isGrounded = false;
 
         }
         if (canJump == true) {

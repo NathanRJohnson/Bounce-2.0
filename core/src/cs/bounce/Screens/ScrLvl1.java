@@ -11,6 +11,7 @@ import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprFloor;
 import cs.bounce.Objects.SprHero;
+import cs.bounce.Objects.SprPlatform;
 
 
 public class ScrLvl1 implements Screen, InputProcessor {
@@ -28,6 +29,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     OrthographicCamera oc = new OrthographicCamera();
     //Floor
     SprFloor flGround;
+    SprPlatform ptPlatformA , ptPlatformLong;
     //Vectors
     Vector2 v2Normal;
 
@@ -49,6 +51,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero = new SprHero(txJumper, 200,150);
         //Floor
         flGround = new SprFloor(txFloor);
+        ptPlatformA = new SprPlatform(txFloor, 100,150,100,30);
+        ptPlatformLong = new SprPlatform(txFloor, 400,150,200,30);
         //Vector
 
         v2Normal = new Vector2(0,1);
@@ -61,9 +65,13 @@ public class ScrLvl1 implements Screen, InputProcessor {
         bgCity.draw(batch);
         flGround.draw(batch);
         sphHero.draw(batch);
+        ptPlatformA.draw(batch);
+        ptPlatformLong.draw(batch);
         batch.end();
         flGround.floor(sphHero);
         sphHero.update();
+        ptPlatformA.hold(sphHero);
+        ptPlatformLong.hold(sphHero);
 
     }
 
