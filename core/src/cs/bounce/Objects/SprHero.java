@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class SprHero extends Sprite implements InputProcessor {
@@ -11,6 +12,7 @@ public class SprHero extends Sprite implements InputProcessor {
     Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
     boolean canJump, isAirborn, isGrounded;
+    Rectangle rectLowerHalf;
 
 
     public SprHero(Texture tx, float _fX, float _fY){
@@ -28,6 +30,7 @@ public class SprHero extends Sprite implements InputProcessor {
         isGrounded = false;
         v2CurrentPos.equals(v2Loc);
         fmaxHeight = v2CurrentPos.y + 100;
+        //rectLowerHalf = new Rectangle(v2Loc.x, v2Loc.y - 50, 100,50 );
 
     }
     public void update()//Grouping Function

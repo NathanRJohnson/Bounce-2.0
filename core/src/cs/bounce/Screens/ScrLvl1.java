@@ -3,9 +3,11 @@ package cs.bounce.Screens;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.SprBackground;
@@ -30,6 +32,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     //Floor
     SprFloor flGround;
     SprPlatform ptPlatformA , ptPlatformLong;
+    ShapeRenderer sr;
     //Vectors
     Vector2 v2Normal;
 
@@ -51,8 +54,11 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero = new SprHero(txJumper, 200,150);
         //Floor
         flGround = new SprFloor(txFloor);
-        ptPlatformA = new SprPlatform(txFloor, 100,150,100,30);
-        ptPlatformLong = new SprPlatform(txFloor, 400,150,200,30);
+        ptPlatformA = new SprPlatform(txFloor, 100,200,100,30);
+        ptPlatformLong = new SprPlatform(txFloor, 400,240,200,30);
+        sr = new ShapeRenderer();
+
+
         //Vector
 
         v2Normal = new Vector2(0,1);
@@ -68,6 +74,16 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ptPlatformA.draw(batch);
         ptPlatformLong.draw(batch);
         batch.end();
+
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        sr.setProjectionMatrix(oc.combined);
+        sr.setColor(Color.RED);
+        sr.rect(100 + 25,150,100,30);
+        sr.setColor(Color.BLUE);
+        sr.rect(100 + 25,150 + 5,100,30);
+
+        sr.end();
+
         flGround.floor(sphHero);
         sphHero.update();
         ptPlatformA.hold(sphHero);
