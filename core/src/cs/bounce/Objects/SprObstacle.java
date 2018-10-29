@@ -9,7 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 public class SprObstacle extends Sprite {
     int nX, nY, nW, nH;
     Vector2 v2PrevLoc;
-    Rectangle rctHitbox, rctDeathbox;
+    Rectangle rctHitbox, rctDeathbox, rctWinbox;
+
     public SprObstacle(int _nX, int _nY, int _nW, int _nH, String sFile) {
         super(new Texture(Gdx.files.internal(sFile)));
         v2PrevLoc = new Vector2(0, 0);
@@ -20,8 +21,9 @@ public class SprObstacle extends Sprite {
         setPosition(nX, nY);
         //setFlip(false, true);
         setSize(nW, nH);
-        rctHitbox = new Rectangle(nX + 20, nY, nW -40, nH);
-        rctDeathbox = new Rectangle(nX + 25, nY, nW -50, nH);
+        rctHitbox = new Rectangle(nX + 20, nY, nW - 40, nH);
+        rctDeathbox = new Rectangle(nX + 25, nY, nW - 50, nH - 40);
+        rctWinbox = new Rectangle(nX + 25, nY, nW - 50, nH - 40);
     }
 
 
@@ -41,6 +43,15 @@ public class SprObstacle extends Sprite {
     public boolean isKilled(SprHero s) {
         if (s.getBoundingRectangle().overlaps(rctDeathbox)) {
             System.out.println("You dead");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isWon(SprHero s) {
+        if (s.getBoundingRectangle().overlaps(rctWinbox)) {
+            System.out.println("You win");
             return true;
         } else {
             return false;

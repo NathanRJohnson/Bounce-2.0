@@ -29,6 +29,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
     //Obstalces
     SprObstacle spoWall;
     SprObstacle spoSpike;
+    SprObstacle spoEnd;
     //Floor
     SprFloor flGround;
     //Vectors
@@ -49,16 +50,16 @@ public class ScrLvl2 implements Screen, InputProcessor {
         //Backgrounds
         bgCity = new SprBackground(txCity);
         //Jumper
-        sphHero = new SprHero(txJumper, 200, 150);
+        sphHero = new SprHero(txJumper, 150, 150);
         //Floor
         flGround = new SprFloor(txFloor);
         //Obstacle
-        spoWall = new SprObstacle(100, 50, 100, 100, "wall.jpg");
-        spoSpike = new SprObstacle(400, 50, 100, 50, "spikes.png");
+        spoWall = new SprObstacle(0, 50, 100, 600, "wall.jpg");
+        spoSpike = new SprObstacle(300, 50, 100, 50, "spikes.png");
+        spoEnd = new  SprObstacle(550,50, 100, 50, "finish.png");
         //Vector
         v2Gravity = new Vector2(0, -1);
         v2Normal = new Vector2(0, 1);
-
     }
 
     @Override
@@ -69,83 +70,94 @@ public class ScrLvl2 implements Screen, InputProcessor {
         sphHero.draw(batch);
         spoSpike.draw(batch);
         spoWall.draw(batch);
+        spoEnd.draw(batch);
         batch.end();
         flGround.floor(sphHero);
         sphHero.update();
         spoWall.isHit(sphHero);
+        spoEnd.isWon(sphHero);
         spoSpike.isKilled(sphHero);
+        isWon();
+        isDead();
     }
 
-   /* if (isHit == true){
 
+    private void isDead() {
+        if (spoSpike.isKilled(sphHero)) {
+            main.updateScreen(3);
+        }
     }
-*/
+
+    private void isWon(){
+        if(spoEnd.isWon(sphHero)) {
+            main.updateScreen(1);
+        }
+    }
+
+
     //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them
     @Override
-    public void resize(int width, int height) {
+    public void resize ( int width, int height){
 
     }
 
     @Override
-    public void pause() {
+    public void pause () {
 
     }
 
     @Override
-    public void resume() {
+    public void resume () {
 
     }
 
     @Override
-    public void hide() {
+    public void hide () {
 
     }
 
     @Override
-    public void dispose() {
+    public void dispose () {
         sphHero.getTexture().dispose();
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown ( int keycode){
         return false;
     }
 
     @Override
-    public boolean keyUp(int keycode) {
+    public boolean keyUp ( int keycode){
         return false;
     }
 
     @Override
-    public boolean keyTyped(char character) {
+    public boolean keyTyped ( char character){
         return false;
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown ( int screenX, int screenY, int pointer, int button){
         return false;
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    public boolean touchUp ( int screenX, int screenY, int pointer, int button){
         return false;
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
+    public boolean touchDragged ( int screenX, int screenY, int pointer){
         return false;
     }
 
     @Override
-    public boolean mouseMoved(int screenX, int screenY) {
+    public boolean mouseMoved ( int screenX, int screenY){
         return false;
     }
 
     @Override
-    public boolean scrolled(int amount) {
+    public boolean scrolled ( int amount){
         return false;
     }
 }
-
-
-
