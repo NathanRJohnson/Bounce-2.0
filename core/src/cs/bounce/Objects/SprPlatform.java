@@ -10,13 +10,15 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class SprPlatform extends Sprite {
     Rectangle rectTopPlatform, rectBotPlatform;
+    Boolean isTouchBottom;
 
     public SprPlatform(Texture tx, float fX, float fY, float fW, float fH){
         super(tx);
         setSize(fW, fH);
         setPosition(fX, fY);
+        isTouchBottom = false;
 
-        rectTopPlatform = new Rectangle(fX + 25,fY,fW -50,fH);
+        rectTopPlatform = new Rectangle(fX + 25,fY + 15,fW -50,fH);
         rectBotPlatform = new Rectangle(fX + 25, fY - 12, fW - 50, fH/2);
 
     }
@@ -46,11 +48,14 @@ public class SprPlatform extends Sprite {
         }
 
         if (j.getBoundingRectangle().overlaps(rectBotPlatform)){
-            System.out.println("eskidiita");
+            System.out.println("eskidiaita");
+            isTouchBottom = true;
            j.v2Acc.y /= -1;
-            j.v2Acc.y /= 2;
+
            j.isGrounded = false;
            j.isAirborn = true;
+        } else {
+            isTouchBottom = false;
         }
 
     }
