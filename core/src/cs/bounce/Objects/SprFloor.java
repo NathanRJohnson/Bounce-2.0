@@ -23,21 +23,21 @@ public class SprFloor extends Sprite {
     {
 
         if (s.getBoundingRectangle().overlaps(rctGround) && !Gdx.input.isKeyPressed((Input.Keys.W))){
-            s.v2Loc.y = 45;
+            s.getLoc().y = 45;
             s.canJump = true;
             s.isAirborn = false;
-            if (s.v2Acc.y != 0) {
-                s.v2Acc.setZero();
+            if (s.getAcc().y != 0) {
+                s.getAcc().setZero();
 
             }
             //   }
             //System.out.println("can i get uhh");
         } else if (s.getBoundingRectangle().overlaps(rctGround) && Gdx.input.isKeyPressed((Input.Keys.W)) && s.isAirborn == true ) {
-            s.v2Loc.y = 45;
+            s.getLoc().y = 45;
             s.canJump = true;
             s.isAirborn = false;
-            if (s.v2Acc.y != 0) {
-                s.v2Acc.setZero();
+            if (s.getAcc().y != 0) {
+                s.getAcc().setZero();
 
             }
         } else {

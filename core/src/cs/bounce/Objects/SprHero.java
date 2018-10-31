@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class SprHero extends Sprite implements InputProcessor {
-    public Vector2 v2Loc, v2Vel, v2Acc;
+    private Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
     boolean canJump, isAirborn;
@@ -32,7 +32,6 @@ public class SprHero extends Sprite implements InputProcessor {
     public void update()//Grouping Function
     {
         move();
-        jump();
         applyForce(v2Gravity);
        // System.out.println(canJump);
     }
@@ -56,41 +55,62 @@ public class SprHero extends Sprite implements InputProcessor {
             // System.out.println(v2Loc.x);
             v2Vel.x = 5;
         }
-    }
 
-    void jump() {
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            v2CurrentPos.equals(v2Loc);
-            fmaxHeight = v2CurrentPos.y + 40;
-            isAirborn = true;
-
-        }
-        if (canJump == true) {
-
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                if (v2Loc.y < fmaxHeight)
-                    v2Acc.y = 18;
-
-            }
-
-            if (!Gdx.input.isKeyPressed(Input.Keys.W) && isAirborn == true){
-                canJump = false;
-            }
-
-            if (v2Loc.y >= fmaxHeight) {
-                canJump = false;
+            if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+                v2CurrentPos.equals(v2Loc);
+                fmaxHeight = v2CurrentPos.y + 40;
                 isAirborn = true;
 
             }
+            if (canJump == true) {
+
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    if (v2Loc.y < fmaxHeight)
+                        v2Acc.y = 18;
+
+                }
+
+                if (!Gdx.input.isKeyPressed(Input.Keys.W) && isAirborn == true) {
+                    canJump = false;
+                }
+
+                if (v2Loc.y >= fmaxHeight) {
+                    canJump = false;
+                    isAirborn = true;
+
+                }
+            }
         }
-    }
+
 
     public void applyForce(Vector2 v) {
         Vector2 v2Copy = v.cpy();
         v2Acc.add(v2Copy);
 
     }
+    //Accessors
+
+    public Vector2 getLoc() {
+        return v2Loc;
+    }
+
+    public Vector2 getVel(){
+        return v2Vel;
+    }
+
+
+    public Vector2 getAcc(){
+        return v2Acc;
+    }
+
+
+
+
+  /*  public Vector2 set(Vector2 v){
+       Vector2 vNew;
+
+       return vNew;
+    }*/
 
     @Override
     public boolean keyDown(int keycode) {
@@ -99,6 +119,7 @@ public class SprHero extends Sprite implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+
         return false;
     }
 
