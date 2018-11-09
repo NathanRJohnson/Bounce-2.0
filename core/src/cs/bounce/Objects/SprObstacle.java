@@ -30,9 +30,9 @@ public class SprObstacle extends Sprite {
         if (s.getBoundingRectangle().overlaps(rctHitbox)) {
 
             System.out.println("There is a wall here");
-            s.v2Loc.x = v2PrevLoc.x;
+            s.getLoc().x = v2PrevLoc.x;
         } else {
-            v2PrevLoc = s.v2Loc.cpy();
+            v2PrevLoc = s.getLoc().cpy();
         }
     }
 

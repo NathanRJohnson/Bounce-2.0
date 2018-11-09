@@ -4,15 +4,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class SprHero extends Sprite implements InputProcessor {
-    public Vector2 v2Loc, v2Vel, v2Acc;
+    private Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
-    boolean canJump, isAirborn, isGrounded;
+    private boolean canJump;
     Rectangle rectLowerHalf;
+    Polygon polyHero;
 
 
     public SprHero(Texture tx, float _fX, float _fY){
@@ -26,15 +28,18 @@ public class SprHero extends Sprite implements InputProcessor {
         setSize(100, 100);
         setFlip(true, false);
         canJump = true;
-        isAirborn = false;
-        isGrounded = false;
         v2CurrentPos.equals(v2Loc);
         fmaxHeight = v2CurrentPos.y + 100;
+        polyHero = new Polygon(new float[] {0,0,0,0,0,0,0,0});
+       // polyHero.setPosition(v2Loc.x, v2Loc.y);
+
+
         //rectLowerHalf = new Rectangle(v2Loc.x, v2Loc.y - 50, 100,50 );
 
     }
     public void update()//Grouping Function
     {
+        polyHero.setVertices(new float[] {v2Loc.x, v2Loc.y, v2Loc.x +getWidth(), v2Loc.y, v2Loc.x +getWidth(), v2Loc.y + getHeight(), v2Loc.x, v2Loc.y + getHeight()});
         move();
         jump();
         applyForce(v2Gravity);
@@ -67,8 +72,6 @@ public class SprHero extends Sprite implements InputProcessor {
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             v2CurrentPos.equals(v2Loc);
             fmaxHeight = v2CurrentPos.y + 40;
-            isAirborn = true;
-            isGrounded = false;
 
         }
         if (canJump == true) {
@@ -79,13 +82,12 @@ public class SprHero extends Sprite implements InputProcessor {
 
             }
 
-            if (!Gdx.input.isKeyPressed(Input.Keys.W) && isAirborn == true){
+            if (!Gdx.input.isKeyPressed(Input.Keys.W)){
                 canJump = false;
             }
 
             if (v2Loc.y >= fmaxHeight) {
                 canJump = false;
-                isAirborn = true;
 
             }
         }
@@ -95,6 +97,27 @@ public class SprHero extends Sprite implements InputProcessor {
         Vector2 v2Copy = v.cpy();
         v2Acc.add(v2Copy);
 
+    }
+
+    public Vector2 getLoc() { return v2Loc; }
+
+    public Vector2 getVel(){
+        return v2Vel;
+    }
+
+    public Vector2 getAcc(){
+        return v2Acc;
+    }
+
+    public Polygon getPolygon(){
+        return polyHero;
+    }
+
+    public boolean getJumpState(){
+        return canJump;
+    }
+    public void setJumpState(boolean b){
+        canJump = b;
     }
 
     @Override

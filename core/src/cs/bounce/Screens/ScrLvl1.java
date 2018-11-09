@@ -77,17 +77,21 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
         sr.begin(ShapeRenderer.ShapeType.Line);
         sr.setProjectionMatrix(oc.combined);
-        sr.setColor(Color.RED);
-        sr.rect(100 + 25,150,100,30);
-        sr.setColor(Color.BLUE);
-        sr.rect(100 + 25,150 + 5,100,30);
 
+        sr.setColor(Color.RED);
+        sr.polygon(ptPlatformA.getPolygon().getTransformedVertices());
+
+        sr.setColor(Color.BLUE);
+        sr.polygon(ptPlatformLong.getPolygon().getTransformedVertices());
+
+        sr.setColor(Color.FIREBRICK);
+        sr.polygon(sphHero.getPolygon().getTransformedVertices());
         sr.end();
 
         flGround.floor(sphHero);
         sphHero.update();
-        ptPlatformA.hold(sphHero);
-        ptPlatformLong.hold(sphHero);
+        ptPlatformA.isHit(sphHero);
+        ptPlatformLong.isHit(sphHero);
 
     }
 
