@@ -1,5 +1,7 @@
 package cs.bounce.Screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +13,8 @@ import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprFloor;
 import cs.bounce.Objects.SprHero;
 import cs.bounce.Objects.SprObstacle;
+
+import java.awt.event.KeyEvent;
 
 public class ScrLvl2 implements Screen, InputProcessor {
 
@@ -34,6 +38,8 @@ public class ScrLvl2 implements Screen, InputProcessor {
     SprFloor flGround;
     //Vectors
     Vector2 v2Gravity, v2Normal;
+    int nDir = 0;
+    char c;
 
     public ScrLvl2(GamMain _main) {
         main = _main;
@@ -56,7 +62,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         //Obstacle
         spoWall = new SprObstacle(0, 50, 100, 600, "wall.jpg");
         spoSpike = new SprObstacle(300, 50, 100, 50, "spikes.png");
-        spoEnd = new  SprObstacle(550,50, 100, 50, "finish.png");
+        spoEnd = new SprObstacle(550, 50, 100, 50, "finish.png");
         //Vector
         v2Gravity = new Vector2(0, -1);
         v2Normal = new Vector2(0, 1);
@@ -73,12 +79,14 @@ public class ScrLvl2 implements Screen, InputProcessor {
         spoEnd.draw(batch);
         batch.end();
         flGround.floor(sphHero);
-        sphHero.update();
+        sphHero.move();
         spoWall.isHit(sphHero);
         spoEnd.isWon(sphHero);
         spoSpike.isKilled(sphHero);
         isWon();
         isDead();
+        keyTyped(c);
+        //KeyHit();
     }
 
 
@@ -88,43 +96,56 @@ public class ScrLvl2 implements Screen, InputProcessor {
         }
     }
 
-    private void isWon(){
-        if(spoEnd.isWon(sphHero)) {
+    private void isWon() {
+        if (spoEnd.isWon(sphHero)) {
             main.updateScreen(1);
         }
     }
+    /*
+    private void KeyHit() {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            nDir = 1;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            nDir = 2;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+           nDir = 3;
+        }
+    }
+*/
 
-
-    //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them
     @Override
-    public void resize ( int width, int height){
+    public void resize(int width, int height) {
 
     }
 
     @Override
-    public void pause () {
+    public void pause() {
 
     }
 
     @Override
-    public void resume () {
+    public void resume() {
 
     }
 
     @Override
-    public void hide () {
+    public void hide() {
 
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         sphHero.getTexture().dispose();
     }
 
     @Override
-    public boolean keyDown ( int keycode){
+    public boolean keyDown(int keycode) {
         return false;
     }
+
+
 
     @Override
     public boolean keyUp ( int keycode){
@@ -133,8 +154,21 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public boolean keyTyped ( char character){
+        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+            sphHero.setY(sphHero.getLoc().y + 1);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            sphHero.setX(sphHero.getVel().x + 5);
+            System.out.println("fuck thi natahn guy");
+        }
+        if(character == 'a' || character == 'A'){
+            sphHero.setX(sphHero.getVel().x - 5);
+        }
+
         return false;
     }
+
+
 
     @Override
     public boolean touchDown ( int screenX, int screenY, int pointer, int button){

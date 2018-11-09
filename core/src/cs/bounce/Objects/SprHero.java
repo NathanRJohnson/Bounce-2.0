@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
-public class SprHero extends Sprite implements InputProcessor {
+public class SprHero extends Sprite {
     private Vector2 v2Loc, v2Vel, v2Acc;
     Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
@@ -40,23 +40,16 @@ public class SprHero extends Sprite implements InputProcessor {
 
     }
 
-    void move() {
+    public void move() {
         v2Vel.add(v2Acc);
         v2Loc.add(v2Vel);
         setPosition(v2Loc.x, v2Loc.y);
+        v2Loc.x = v2Vel.x + v2Loc.x;
         v2Vel.setZero();
 
-        //Left Right Movement
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            //  System.out.println(v2Loc.x);
-            v2Vel.x = -5;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            // System.out.println(v2Loc.x);
-            v2Vel.x = 5;
-        }
-
+        /*
             if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+
                 v2CurrentPos.equals(v2Loc);
                 fmaxHeight = v2CurrentPos.y + 40;
                 isAirborn = true;
@@ -80,13 +73,13 @@ public class SprHero extends Sprite implements InputProcessor {
 
                 }
             }
+            */
         }
 
 
     public void applyForce(Vector2 v) {
         Vector2 v2Copy = v.cpy();
         v2Acc.add(v2Copy);
-
     }
     //Accessors
 
@@ -107,50 +100,11 @@ public class SprHero extends Sprite implements InputProcessor {
 
 
   /*  public Vector2 set(Vector2 v){
+
        Vector2 vNew;
 
        return vNew;
     }*/
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
 }
 
