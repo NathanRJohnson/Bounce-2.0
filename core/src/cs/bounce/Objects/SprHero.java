@@ -11,7 +11,6 @@ public class SprHero extends Sprite {
     Vector2 v2CurrentPos, v2Gravity;
     float fmaxHeight;
     boolean canJump, isAirborn;
-    int nKeyCodeW = (int)'w';
 
     public SprHero(Texture tx, float _fX, float _fY){
         super(tx);
@@ -31,21 +30,18 @@ public class SprHero extends Sprite {
     }
     public void update()//Grouping Function
     {
-        move();
         applyForce(v2Gravity);
-       // System.out.println(canJump);
-    }
-
-    void checkMove() {
-
-    }
-
-    public void move() {
         v2Vel.add(v2Acc);
         v2Loc.add(v2Vel);
         setPosition(v2Loc.x, v2Loc.y);
-        v2Loc.x = v2Vel.x + v2Loc.x;
         v2Vel.setZero();
+        //System.out.println(v2Loc.x +" "+ v2Loc.y);
+        v2CurrentPos.equals(v2Loc);
+       // System.out.println(canJump);
+    }
+
+
+    public void move() {
 
         /*
             if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
@@ -60,7 +56,6 @@ public class SprHero extends Sprite {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     if (v2Loc.y < fmaxHeight)
                         v2Acc.y = 18;
-
                 }
 
                 if (!Gdx.input.isKeyPressed(Input.Keys.W) && isAirborn == true) {
@@ -70,7 +65,6 @@ public class SprHero extends Sprite {
                 if (v2Loc.y >= fmaxHeight) {
                     canJump = false;
                     isAirborn = true;
-
                 }
             }
             */
@@ -91,12 +85,18 @@ public class SprHero extends Sprite {
         return v2Vel;
     }
 
-
     public Vector2 getAcc(){
         return v2Acc;
     }
 
+    public Vector2 getv2CurrentPos(){ return v2CurrentPos; }
 
+    public boolean getcanJump() { return canJump; }
+
+    public void setVel(float x, float y){
+        v2Vel.x = x;
+        v2Vel.y = y;
+    }
 
 
   /*  public Vector2 set(Vector2 v){

@@ -14,7 +14,6 @@ import cs.bounce.Objects.SprFloor;
 import cs.bounce.Objects.SprHero;
 import cs.bounce.Objects.SprObstacle;
 
-import java.awt.event.KeyEvent;
 
 public class ScrLvl2 implements Screen, InputProcessor {
 
@@ -37,16 +36,19 @@ public class ScrLvl2 implements Screen, InputProcessor {
     //Floor
     SprFloor flGround;
     //Vectors
+
     Vector2 v2Gravity, v2Normal;
-    int nDir = 0;
+    int nMove;
     char c;
 
     public ScrLvl2(GamMain _main) {
         main = _main;
+        Gdx.input.setInputProcessor((this));
     }
 
     @Override
     public void show() {
+        System.out.println("Up");
         oc.setToOrtho(false, 800, 400);
         batch = new SpriteBatch();
         //Textures
@@ -78,15 +80,31 @@ public class ScrLvl2 implements Screen, InputProcessor {
         spoWall.draw(batch);
         spoEnd.draw(batch);
         batch.end();
+        sphHero.update();
         flGround.floor(sphHero);
-        sphHero.move();
         spoWall.isHit(sphHero);
         spoEnd.isWon(sphHero);
         spoSpike.isKilled(sphHero);
         isWon();
         isDead();
-        keyTyped(c);
-        //KeyHit();
+        //keyDown(nMove);
+   /*     if (sphHero.getcanJump()) {
+      if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        //sphHero.setY(sphHero.getv2CurrentPos().y + 40);
+        sphHero.getAcc().y = 18;
+        System.out.println("Up");
+   //     canJump = false;
+    }
+}
+        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            sphHero.setVel(5,0);
+           // System.out.println("Right");
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            sphHero.setVel(-5,0);
+         //   System.out.println("Left");
+        }
+        */
     }
 
 
@@ -101,19 +119,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
             main.updateScreen(1);
         }
     }
-    /*
-    private void KeyHit() {
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            nDir = 1;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            nDir = 2;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-           nDir = 3;
-        }
-    }
-*/
+
 
     @Override
     public void resize(int width, int height) {
@@ -142,56 +148,65 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
-    }
-
-
-
-    @Override
-    public boolean keyUp ( int keycode){
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped ( char character){
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            sphHero.setY(sphHero.getLoc().y + 1);
+        System.out.println("Up");
+        /*if(keycode == 52){
+            sphHero.setY(sphHero.getv2CurrentPos().y + 40);
+            System.out.println("Up");
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            sphHero.setX(sphHero.getVel().x + 5);
-            System.out.println("fuck thi natahn guy");
+        if(keycode == 32){
+            sphHero.setVel(5,0);
+            System.out.println("Right");
         }
-        if(character == 'a' || character == 'A'){
-            sphHero.setX(sphHero.getVel().x - 5);
+        if(keycode == 29){
+            sphHero.setVel(-5,0);
+            System.out.println("Left");
+        }*/
+        return true;
+    }
+
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        System.out.println("Up");
+        if (character == 'a') {
+            sphHero.setY(sphHero.getv2CurrentPos().y + 40);
+            System.out.println("Up");
+
         }
 
-        return false;
+
+        return true;
     }
 
 
-
     @Override
-    public boolean touchDown ( int screenX, int screenY, int pointer, int button){
-        return false;
-    }
-
-    @Override
-    public boolean touchUp ( int screenX, int screenY, int pointer, int button){
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("Up");
         return false;
     }
 
     @Override
-    public boolean touchDragged ( int screenX, int screenY, int pointer){
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean mouseMoved ( int screenX, int screenY){
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
 
     @Override
-    public boolean scrolled ( int amount){
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
         return false;
     }
 }

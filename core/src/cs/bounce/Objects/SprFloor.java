@@ -22,7 +22,7 @@ public class SprFloor extends Sprite {
     public void floor(SprHero s)
     {
 
-        if (s.getBoundingRectangle().overlaps(rctGround) && !Gdx.input.isKeyPressed((Input.Keys.W))){
+        if (s.getBoundingRectangle().overlaps(rctGround)){
             s.getLoc().y = 45;
             s.canJump = true;
             s.isAirborn = false;
@@ -32,7 +32,7 @@ public class SprFloor extends Sprite {
             }
             //   }
             //System.out.println("can i get uhh");
-        } else if (s.getBoundingRectangle().overlaps(rctGround) && Gdx.input.isKeyPressed((Input.Keys.W)) && s.isAirborn == true ) {
+        } else if (s.getBoundingRectangle().overlaps(rctGround) && s.isAirborn == true ) {
             s.getLoc().y = 45;
             s.canJump = true;
             s.isAirborn = false;
