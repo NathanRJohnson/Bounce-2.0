@@ -14,7 +14,7 @@ import cs.bounce.Objects.SprObstacle;
 
 public class ScrLvl2 implements Screen, InputProcessor {
 
-    GamMain main;
+   /* GamMain main;
     SpriteBatch batch;
     //Textures
     Texture txCity;
@@ -32,15 +32,15 @@ public class ScrLvl2 implements Screen, InputProcessor {
     //Floor
     SprFloor flGround;
     //Vectors
-    Vector2 v2Gravity, v2Normal;
+    Vector2 v2Gravity, v2Normal; */
 
     public ScrLvl2(GamMain _main) {
-        main = _main;
+    //    main = _main;
     }
 
     @Override
     public void show() {
-        oc.setToOrtho(false, 800, 400);
+   /*     oc.setToOrtho(false, 800, 400);
         batch = new SpriteBatch();
         //Textures
         txCity = new Texture("bg_city.png");
@@ -58,12 +58,12 @@ public class ScrLvl2 implements Screen, InputProcessor {
         //Vector
         v2Gravity = new Vector2(0, -1);
         v2Normal = new Vector2(0, 1);
-
+*/
     }
 
     @Override
     public void render(float delta) {
-        batch.begin();
+  /*      batch.begin();
         bgCity.draw(batch);
         flGround.draw(batch);
         sphHero.draw(batch);
@@ -74,6 +74,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         sphHero.update();
         spoWall.isHit(sphHero);
         spoSpike.isKilled(sphHero);
+        */
     }
 
    /* if (isHit == true){
@@ -103,7 +104,6 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        sphHero.getTexture().dispose();
     }
 
     @Override
