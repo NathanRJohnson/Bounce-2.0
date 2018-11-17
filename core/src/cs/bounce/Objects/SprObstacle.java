@@ -12,7 +12,7 @@ public class SprObstacle extends Sprite {
     Rectangle rctHitbox, rctDeathbox, rctWinbox;
 
     public SprObstacle(int _nX, int _nY, int _nW, int _nH, String sFile) {
-        super(new Texture(Gdx.files.internal(sFile)));
+   /*     super(new Texture(Gdx.files.internal(sFile)));
         v2PrevLoc = new Vector2(0, 0);
         nX = _nX;
         nY = _nY;
@@ -56,5 +56,6 @@ public class SprObstacle extends Sprite {
         } else {
             return false;
         }
+    }*/
     }
 }

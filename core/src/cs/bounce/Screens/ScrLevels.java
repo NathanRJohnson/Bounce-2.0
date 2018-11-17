@@ -11,21 +11,21 @@ import cs.bounce.Objects.SprButton;
 import cs.bounce.Menu.GamMain;
 
 public class ScrLevels implements Screen, InputProcessor {
-    SpriteBatch batch;
+  /*  SpriteBatch batch;
     GamMain main;
     SprButton btnLvl1,  btnLvl2, btnBack;
     OrthographicCamera oc;
     Vector2 vMouse;
     Texture txbgLevels;
     Sprite sprbgLevels;
-
+*/
     public ScrLevels(GamMain main) {
-        this.main = main;
+//        this.main = main;
     }
 
     public void show() {
         //OC Camera
-        oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+/*        oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.update();
         Gdx.input.setInputProcessor(this);
@@ -46,23 +46,23 @@ public class ScrLevels implements Screen, InputProcessor {
         //Mouse
         vMouse = new Vector2(0,0);
         System.out.println("Level 1 is just Gravity");
-        System.out.println("Level 2 has hit testing");
+        System.out.println("Level 2 has hit testing");*/
     }
 
     @Override
     public void render(float delta) {
-        batch.setProjectionMatrix(oc.combined);
+/*        batch.setProjectionMatrix(oc.combined);
         batch.begin();
         changeScreen();
         sprbgLevels.draw(batch);
         btnLvl1.draw(batch);
         btnLvl2.draw(batch);
         btnBack.draw(batch);
-        batch.end();
+        batch.end();*/
     }
 
     private void changeScreen() {
-        if (Gdx.input.justTouched()) {
+/*        if (Gdx.input.justTouched()) {
             if (btnLvl1.isMousedOver()) {
                 System.out.println("Level 1");
                 main.updateScreen(2);
@@ -76,7 +76,7 @@ public class ScrLevels implements Screen, InputProcessor {
                 main.updateScreen(0);
             }
 
-        }
+        } */
     }
 
     //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them

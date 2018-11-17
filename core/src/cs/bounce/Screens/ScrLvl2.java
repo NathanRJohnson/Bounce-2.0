@@ -17,7 +17,7 @@ import cs.bounce.Objects.SprObstacle;
 
 public class ScrLvl2 implements Screen, InputProcessor {
 
-    GamMain main;
+   /* GamMain main;
     SpriteBatch batch;
     //Textures
     Texture txCity;
@@ -39,16 +39,16 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     Vector2 v2Gravity, v2Normal;
     int nMove;
-    char c;
+    char c;*/
 
     public ScrLvl2(GamMain _main) {
-        main = _main;
-        Gdx.input.setInputProcessor((this));
+    /*    main = _main;
+        Gdx.input.setInputProcessor((this));*/
     }
 
     @Override
     public void show() {
-        System.out.println("Up");
+    /*    System.out.println("Up");
         oc.setToOrtho(false, 800, 400);
         batch = new SpriteBatch();
         //Textures
@@ -67,12 +67,12 @@ public class ScrLvl2 implements Screen, InputProcessor {
         spoEnd = new SprObstacle(550, 50, 100, 50, "finish.png");
         //Vector
         v2Gravity = new Vector2(0, -1);
-        v2Normal = new Vector2(0, 1);
+        v2Normal = new Vector2(0, 1);*/
     }
 
     @Override
     public void render(float delta) {
-        batch.begin();
+   /*     batch.begin();
         bgCity.draw(batch);
         flGround.draw(batch);
         sphHero.draw(batch);
@@ -109,15 +109,15 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
 
     private void isDead() {
-        if (spoSpike.isKilled(sphHero)) {
+     /*   if (spoSpike.isKilled(sphHero)) {
             main.updateScreen(3);
         }
     }
 
     private void isWon() {
-        if (spoEnd.isWon(sphHero)) {
+     /*   if (spoEnd.isWon(sphHero)) {
             main.updateScreen(1);
-        }
+        }*/
     }
 
 
@@ -143,12 +143,12 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        sphHero.getTexture().dispose();
+  //      sphHero.getTexture().dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("Up");
+ /*       System.out.println("Up");
         /*if(keycode == 52){
             sphHero.setY(sphHero.getv2CurrentPos().y + 40);
             System.out.println("Up");
@@ -172,12 +172,12 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        System.out.println("Up");
+    /*    System.out.println("Up");
         if (character == 'a') {
             sphHero.setY(sphHero.getv2CurrentPos().y + 40);
             System.out.println("Up");
 
-        }
+        }*/
 
 
         return true;

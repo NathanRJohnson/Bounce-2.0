@@ -10,21 +10,21 @@ import cs.bounce.Objects.SprButton;
 import cs.bounce.Menu.GamMain;
 
 public class ScrStart implements Screen, InputProcessor {
-    SpriteBatch batch;
+  /*  SpriteBatch batch;
     GamMain main;
     SprButton btnStart;
     SprBackground bgStart;
     OrthographicCamera oc;
     Vector2 vMouse;
-    Texture txStart;
+    Texture txStart; */
 
     public ScrStart(GamMain main) {
-        this.main = main;
+    //    this.main = main;
     }
 
     @Override
     public void show() {
-        //OC Camera
+   /*     //OC Camera
         oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.update();
@@ -43,26 +43,26 @@ public class ScrStart implements Screen, InputProcessor {
 
 
         //Mouse
-        vMouse = new Vector2(0,0);
+        vMouse = new Vector2(0,0); */
     }
 
     @Override
     public void render(float delta) {
-        batch.begin();
+   /*     batch.begin();
         batch.setProjectionMatrix(oc.combined);
         changeScreen();
         bgStart.draw(batch);
         btnStart.draw(batch);
-        batch.end();
+        batch.end(); */
     }
 
     private void changeScreen() {
-        if (Gdx.input.justTouched()) {
+     /*   if (Gdx.input.justTouched()) {
             if (btnStart.isMousedOver()) {
                 System.out.println("Levels Screen");
                 main.updateScreen(1);
             }
-        }
+        } */
     }
 
 
@@ -90,7 +90,7 @@ public class ScrStart implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        btnStart.getTexture().dispose();
+  //      btnStart.getTexture().dispose();
         return;
     }
 

@@ -1,6 +1,7 @@
 package cs.bounce.Screens;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,55 +17,48 @@ import cs.bounce.Objects.SprHero;
 public class ScrLvl1 implements Screen, InputProcessor {
     GamMain main;
     SpriteBatch batch;
-    //Textures
-    Texture txCity;
     Texture txJumper;
-    Texture txFloor;
-    //Backgrounds
-    SprBackground bgCity;
-    //Jumper
+    Texture txBackground;
+
     SprHero sphHero;
-    //Orthographic Camera
+    SprBackground bgBackground;
     OrthographicCamera oc = new OrthographicCamera();
-    //Floor
-    SprFloor flGround;
-    //Vectors
-    Vector2 v2Normal;
+
+    Boolean isAPressed;
+    Boolean isDPressed;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
+        batch = new SpriteBatch();
+        oc.setToOrtho(false, 700, 700);
+        txJumper = new Texture("hero_yeetgirl.png");
+        txBackground = new Texture("bg_city.png");
+        sphHero = new SprHero(txJumper, 250, 250);
+        bgBackground = new SprBackground(txBackground);
+        isAPressed = false;
+        isDPressed = false;
+
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void show() {
-        oc.setToOrtho(false,800,400);
-        batch = new SpriteBatch();
-        //Textures
-        txCity = new Texture("bg_city.png");
-        txJumper = new Texture("hero_yeetgirl.png");
-        txFloor = new Texture("fl_ground.png");
-        //Backgrounds
-        bgCity = new SprBackground(txCity);
-        //Hero
-        sphHero = new SprHero(txJumper, 200,150);
-        //Floor
-        flGround = new SprFloor(txFloor);
-        //Vector
-
-        v2Normal = new Vector2(0,1);
 
     }
 
     @Override
     public void render(float delta) {
+        oc.update();
         batch.begin();
-        bgCity.draw(batch);
-        flGround.draw(batch);
+        // batch.setProjectionMatrix(oc.combined);
+        bgBackground.draw(batch);
         sphHero.draw(batch);
         batch.end();
-        flGround.floor(sphHero);
+
         sphHero.update();
 
+        if (!isAPressed && !isDPressed)
+            sphHero.setV2Vel(0, sphHero.getV2Vel().y);
     }
 
     @Override
@@ -89,18 +83,39 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-    sphHero.getTexture().dispose();
-    bgCity.getTexture().dispose();
-    flGround.getTexture().dispose();
+        sphHero.getTexture().dispose();
+        bgBackground.getTexture().dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        switch (keycode) {
+            case 29:
+                sphHero.setV2Vel(-5, sphHero.getV2Vel().y);
+                System.out.println("a");
+                isAPressed = true;
+                break;
+            case 32:
+                sphHero.setV2Vel(5, sphHero.getV2Vel().y);
+                System.out.println("d");
+                isDPressed = true;
+                break;
+
+        }
         return false;
+
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case 29:
+                isAPressed = false;
+                break;
+            case 32:
+                isDPressed = false;
+                break;
+        }
         return false;
     }
 

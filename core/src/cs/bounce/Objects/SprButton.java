@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class SprButton extends Sprite{
-    int nX, nY, nW, nH;
+   /* int nX, nY, nW, nH;
     public SprButton(int _nX, int _nY, int _nW, int _nH, String sFile){
         super(new Texture(Gdx.files.internal(sFile)));
         nX = _nX;
@@ -22,6 +22,6 @@ public class SprButton extends Sprite{
             return true;
         }
         return false;
-    }
+    }*/
 
 }

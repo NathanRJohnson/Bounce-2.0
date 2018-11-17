@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 
 public class SprFloor extends Sprite {
-    Rectangle rctGround;
+ /* Rectangle rctGround;
     public int nState;
     public SprFloor(Texture tx){
         super(tx);
@@ -44,6 +44,6 @@ public class SprFloor extends Sprite {
             s.isAirborn = true;
         }
 
-    }
+    } */
 }
 
