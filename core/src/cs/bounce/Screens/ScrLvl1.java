@@ -49,7 +49,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void render(float delta) {
         oc.update();
         batch.begin();
-        // batch.setProjectionMatrix(oc.combined);
+        //batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         sphHero.draw(batch);
         batch.end();

@@ -1,4 +1,5 @@
 package cs.bounce.Screens;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -7,62 +8,58 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprButton;
 import cs.bounce.Menu.GamMain;
 
 public class ScrLevels implements Screen {
-  /*  SpriteBatch batch;
+
     GamMain main;
+    SpriteBatch batch;
+    Texture txbgLevels;
     SprButton btnLvl1,  btnLvl2, btnBack;
     OrthographicCamera oc;
     Vector2 vMouse;
-    Texture txbgLevels;
-    Sprite sprbgLevels; */
+    SprBackground sprbgLevels;
 
     public ScrLevels(GamMain main) {
-        //    this.main = main;
-    }
-
-    public void show() {
+            this.main = main;
+           // Gdx.input.setInputProcessor(this);
         //OC Camera
-  /*      oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        oc.update();
-        Gdx.input.setInputProcessor(this);
-
+        oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        oc.setToOrtho(false, 700, 700);
         //Texture
         txbgLevels = new Texture("bg_level_select.jpg");
-        //Sprites
-        sprbgLevels = new Sprite(txbgLevels, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
         batch = new SpriteBatch();
-
         //SprBackground
-
+        sprbgLevels = new SprBackground(txbgLevels);
         //Buttons
-        btnBack = new SprButton(0,0,100, 100,"back.png");
-        btnLvl1 = new SprButton(50,150,100, 100,"lvl1_select.png");
-        btnLvl2 = new SprButton(200,150,100, 100,"lvl2_select.png");
+        btnBack = new SprButton(0,600,100, 100,"back.png");
+        btnLvl1 = new SprButton(50,400,100, 100,"lvl1_select.png");
+        btnLvl2 = new SprButton(200,400,100, 100,"lvl2_select.png");
         //Mouse
         vMouse = new Vector2(0,0);
         System.out.println("Level 1 is just Gravity");
-        System.out.println("Level 2 has hit testing"); */
+        System.out.println("Level 2 has hit testing");
+    }
+
+    public void show() {
     }
 
     @Override
     public void render(float delta) {
-    /*    batch.setProjectionMatrix(oc.combined);
         batch.begin();
+        batch.setProjectionMatrix(oc.combined);
         changeScreen();
         sprbgLevels.draw(batch);
         btnLvl1.draw(batch);
         btnLvl2.draw(batch);
         btnBack.draw(batch);
-        batch.end(); */
+        batch.end();
     }
 
     private void changeScreen() {
-      /*  if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched()) {
             if (btnLvl1.isMousedOver()) {
                 System.out.println("Level 1");
                 main.updateScreen(2);
@@ -76,7 +73,7 @@ public class ScrLevels implements Screen {
                 main.updateScreen(0);
             }
 
-        } */
+        }
     }
 
     //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them

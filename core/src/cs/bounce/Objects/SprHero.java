@@ -38,32 +38,41 @@ public class SprHero extends Sprite {
     public Vector2 getV2Pos() {
         return v2Pos;
     }
+
     public Vector2 getV2Vel() {
         return v2Vel;
     }
+
     public Vector2 getV2Acc() {
         return v2Acc;
     }
+
     public void setV2Pos(Vector2 v) {
         v2Pos.equals(v);
     }
+
     public void setV2Pos(float x, float y) {
         v2Pos.x = x;
         v2Pos.y = y;
     }
+
     public void setV2Vel(Vector2 v) {
         v2Vel.equals(v);
     }
+
     public void setV2Vel(float x, float y) {
         v2Vel.x = x;
         v2Vel.y = y;
     }
+
     public void setV2Acc(Vector2 v) {
         v2Acc.equals(v);
     }
+
     public boolean getJumpState() {
         return canJump;
     }
+
     public void setCanJump(boolean b) {
         canJump = b;
     }
