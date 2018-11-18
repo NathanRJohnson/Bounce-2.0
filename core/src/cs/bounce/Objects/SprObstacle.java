@@ -3,38 +3,30 @@ package cs.bounce.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class SprObstacle extends Sprite {
-  /*  int nX, nY, nW, nH;
-    Vector2 v2PrevLoc;
-    Rectangle rctHitbox, rctDeathbox; */
+    private int nX, nY, nW, nH;
+    private Polygon plyObstacle;
     public SprObstacle(int _nX, int _nY, int _nW, int _nH, String sFile) {
-  /*      super(new Texture(Gdx.files.internal(sFile)));
-        v2PrevLoc = new Vector2(0, 0);
+        super(new Texture(Gdx.files.internal(sFile)));
         nX = _nX;
         nY = _nY;
+        setOrigin(nX, nY);
         nW = _nW;
         nH = _nH;
-        setPosition(nX, nY);
-        //setFlip(false, true);
         setSize(nW, nH);
-        rctHitbox = new Rectangle(nX + 20, nY, nW -40, nH);
-        rctDeathbox = new Rectangle(nX + 25, nY, nW -50, nH); */
+        plyObstacle = new Polygon(new float[] {0,0,0,0,0,0,0,0});
     }
 
 
     //Used for walls, platforms etc. (it stops the heros movement)
-    public void isHit(SprHero s) {
-/*
-        if (s.getBoundingRectangle().overlaps(rctHitbox)) {
+    public boolean isHit(SprHero s) {
 
-            System.out.println("There is a wall here");
-            s.v2Loc.x = v2PrevLoc.x;
-        } else {
-            v2PrevLoc = s.v2Loc.cpy();
-        } */
+
+    return false;
     }
 
     //Used for harmful obstacles such as spikes (eventually this will trigger his death)
