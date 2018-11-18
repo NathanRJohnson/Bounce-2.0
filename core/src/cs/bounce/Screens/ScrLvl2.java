@@ -178,8 +178,6 @@ public class ScrLvl2 implements Screen, InputProcessor {
             System.out.println("Up");
 
         }
-
-
         return true;
     }
 
