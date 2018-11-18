@@ -2,6 +2,7 @@ package cs.bounce.Screens;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -12,11 +13,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.sun.deploy.util.BlackList;
 import cs.bounce.Menu.GamMain;
-import cs.bounce.Objects.SprBackground;
-import cs.bounce.Objects.SprFloor;
-import cs.bounce.Objects.SprHero;
-import cs.bounce.Objects.SprObstacle;
+import cs.bounce.Objects.*;
 
 
 public class ScrLvl1 implements Screen, InputProcessor {
@@ -26,7 +25,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Texture txBackground;
 
     SprHero sphHero;
-    SprObstacle obFloor;
+    ObjPlatform obFloor;
     SprBackground bgBackground;
 
     OrthographicCamera oc = new OrthographicCamera();
@@ -37,8 +36,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     Vector2 v2Gravity;
 
-    Polygon plyHero, plyObj;
-
     public ScrLvl1(GamMain _main) {
         main = _main;
         batch = new SpriteBatch();
@@ -47,21 +44,11 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txJumper = new Texture("jumper.png");
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
-        obFloor = new SprObstacle(0,-50,700,100, "fl_ground.png");
+        obFloor = new ObjPlatform("fl_ground.png",0,0,700,100);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
         v2Gravity = new Vector2(0,-1);
-        plyHero = new Polygon(new float[]{
-                sphHero.getX() + 25, sphHero.getY() + 15,
-                        sphHero.getX() + sphHero.getWidth() - 20, sphHero.getY() + 15 , sphHero.getX() + sphHero.getWidth() - 20,
-                        sphHero.getY() + sphHero.getHeight() - 20,
-                        sphHero.getX() + 25, sphHero.getY() + sphHero.getHeight() - 20});
-        plyObj = new Polygon(new float[]
-                {obFloor.getX(), obFloor.getY(),
-                        obFloor.getX() + obFloor.getWidth(), obFloor.getY(),
-                        obFloor.getX() + obFloor.getWidth(), obFloor.getY() + obFloor.getHeight(),
-                        obFloor.getX(), obFloor.getY() + obFloor.getHeight()});
 
         Gdx.input.setInputProcessor(this);
     }
@@ -72,6 +59,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        System.out.println(sphHero.getJumpState());
         oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
@@ -83,29 +71,36 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.begin(ShapeRenderer.ShapeType.Line);
         sr.setProjectionMatrix(oc.combined);
         sr.setColor(Color.RED);
-        sr.polygon(plyHero.getTransformedVertices());
+        sr.line(0, sphHero.getMaxheight(), Gdx.graphics.getWidth(), sphHero.getMaxheight());
+        sr.setColor(Color.BLACK);
+        sr.polygon(sphHero.getPolygon().getTransformedVertices());
         sr.setColor(Color.BLUE);
-        sr.polygon(plyObj.getTransformedVertices());
-
+        sr.polygon(obFloor.getPolygon().getTransformedVertices());
         sr.end();
-        plyHero.setPosition(sphHero.getPos().x, sphHero.getPos().y);
-        plyObj.setOrigin(obFloor.getOriginX(), obFloor.getOriginY());
-        plyObj.setPosition(obFloor.getX(), obFloor.getY());
 
-        if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {
+        obFloor.isHit(sphHero.getPolygon(),sphHero);
+
+
+   /*     if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {
             sphHero.setPos(sphHero.getPos().x, obFloor.getY() + sphHero.getHeight() - 15);
             System.out.println("yeouch");
             sphHero.setVel(sphHero.getVel().x, 0);
-        }
+        } */
 
 
         //System.out.println(jumper.getV2Pos());
-        sphHero.applyForce(v2Gravity);
+        if (!sphHero.getJumpState()) {
+           // System.out.println("The laws of physics are in effect");
+            sphHero.applyForce(v2Gravity);
+        }
         sphHero.update();
 
 
         if (!isAPressed && !isDPressed)
             sphHero.setVel(0,sphHero.getVel().y);
+
+        if (sphHero.getPos().y >= sphHero.getMaxheight()) //sets can jump false when Hero reaches maximum jump height
+            sphHero.setCanJump(false);
 
     }
 
@@ -149,7 +144,14 @@ public class ScrLvl1 implements Screen, InputProcessor {
                 System.out.println("d");
                 isDPressed = true;
                 break;
+            case 51:
+                if (sphHero.getJumpState() && sphHero.getPos().y != sphHero.getMaxheight()) {
+                    System.out.println("w");
+                    sphHero.setMaxHeight();
+                    sphHero.setVel(sphHero.getVel().x, 15);
 
+                }
+                break;
         }
         return false;
     }
@@ -162,6 +164,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
                 break;
             case 32:
                 isDPressed = false;
+                break;
+            case 51:
+                sphHero.setCanJump(false);
                 break;
         }
         return false;

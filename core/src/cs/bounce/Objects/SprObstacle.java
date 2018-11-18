@@ -8,18 +8,23 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class SprObstacle extends Sprite {
-    private int nX, nY, nW, nH;
-    private Polygon plyObstacle;
-    public SprObstacle(int _nX, int _nY, int _nW, int _nH, String sFile) {
-        super(new Texture(Gdx.files.internal(sFile)));
-        nX = _nX;
-        nY = _nY;
-        setOrigin(nX, nY);
-        nW = _nW;
-        nH = _nH;
-        setSize(nW, nH);
-        plyObstacle = new Polygon(new float[] {0,0,0,0,0,0,0,0});
+    public float fX, fY, fW, fH;
+    public Polygon plyObstacle;
+    public SprObstacle(String sFile, float _fX, float _fY, float _fW, float _fH) {
+       super(new Texture(Gdx.files.internal(sFile)));
+        fX = _fX;
+        fY = _fY;
+        setOrigin(fX, fY);
+        fW = _fW;
+        fH = _fH;
+        setSize(fW, fH);
+        plyObstacle = new Polygon(new float[] {
+                fX, fY, fX + fW,fY, fX + fW, fY + fH, fX, fY +fH
+                //fX, fY + fH, fX + fW, fY + fH, fX + fW, fY, fX, fY
+        });
     }
+
+    public Polygon getPolygon(){ return plyObstacle;}
 
 
     //Used for walls, platforms etc. (it stops the heros movement)

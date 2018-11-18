@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 public class SprHero extends Sprite {
     private Vector2 v2Pos, v2Vel, v2Acc;
     private float fX, fY;
-    private float fmaxHeight;
-    private boolean canJump;
+    private float fMaxHeight;
+    private boolean canJump = false;
     private Polygon plyHero;
     public SprHero(Texture tx, float _fX, float _fY) {
         super(tx);
@@ -20,11 +20,16 @@ public class SprHero extends Sprite {
         setFlip(true, false);
         v2Vel = new Vector2(0, 0);
         v2Acc = new Vector2(0, 0);
+        fMaxHeight = v2Pos.y + 40;
         plyHero = new Polygon(new float[] {0,0,0,0,0,0,0,0});
 
     }
 
     public void update() {
+        plyHero.setVertices(new float[]{v2Pos.x + 25, v2Pos.y + 15,
+                v2Pos.x + 80, v2Pos.y + 15,
+                v2Pos.x + 80, v2Pos.y + 80,
+                v2Pos.x + 25, v2Pos.y + 80});
         setPosition(v2Pos.x, v2Pos.y);
         v2Pos.add(v2Vel);
         v2Vel.add(v2Acc);
@@ -65,12 +70,23 @@ public class SprHero extends Sprite {
     public void setAcc(Vector2 v) {
         v2Acc.equals(v);
     }
+    public void setAcc(float x, float y) {
+        v2Acc.x = x;
+        v2Acc.y = y;
+    }
     public boolean getJumpState() {
         return canJump;
     }
     public void setCanJump(boolean b) {
         canJump = b;
     }
+    public float getMaxheight(){
+        return fMaxHeight;
+    }
+    public void setMaxHeight(){
+        fMaxHeight = v2Pos.y + 140;
+    }
+    public Polygon getPolygon(){ return plyHero;}
 
 }
 
