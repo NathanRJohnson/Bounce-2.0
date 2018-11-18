@@ -42,7 +42,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public ScrLvl1(GamMain _main) {
         main = _main;
         batch = new SpriteBatch();
-        oc.setToOrtho(false, 700, 700);
+        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sr = new ShapeRenderer();
         txJumper = new Texture("jumper.png");
         txBackground = new Texture("bg_city.png");
@@ -52,11 +52,11 @@ public class ScrLvl1 implements Screen, InputProcessor {
         isAPressed = false;
         isDPressed = false;
         v2Gravity = new Vector2(0,-1);
-        plyHero = new Polygon(new float[]
-                {sphHero.getX(), sphHero.getY(), sphHero.getX() + sphHero.getWidth(), sphHero.getY() , sphHero.getX() + sphHero.getWidth(), sphHero.getY() + sphHero.getHeight(), sphHero.getX(), sphHero.getY() + sphHero.getHeight()
-                        /*sphHero.getPos().x, sphHero.getPos().y, sphHero.getPos().x + sphHero.getWidth(), sphHero.getPos().y,
-                sphHero.getPos().x + sphHero.getWidth(), sphHero.getPos().y + sphHero.getHeight(),
-                sphHero.getPos().x, sphHero.getPos().y + sphHero.getHeight()*/});
+        plyHero = new Polygon(new float[]{
+                sphHero.getX() + 25, sphHero.getY() + 15,
+                        sphHero.getX() + sphHero.getWidth() - 20, sphHero.getY() + 15 , sphHero.getX() + sphHero.getWidth() - 20,
+                        sphHero.getY() + sphHero.getHeight() - 20,
+                        sphHero.getX() + 25, sphHero.getY() + sphHero.getHeight() - 20});
         plyObj = new Polygon(new float[]
                 {obFloor.getX(), obFloor.getY(),
                         obFloor.getX() + obFloor.getWidth(), obFloor.getY(),
@@ -74,7 +74,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void render(float delta) {
         oc.update();
         batch.begin();
-        // batch.setProjectionMatrix(oc.combined);
+        batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         obFloor.draw(batch);
         sphHero.draw(batch);
@@ -88,14 +88,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.polygon(plyObj.getTransformedVertices());
 
         sr.end();
-
-    plyHero.setOrigin(sphHero.getWidth()/2,sphHero.getHeight());
-        plyHero.setPosition(sphHero.getPos().x, sphHero.getPos().y + sphHero.getHeight()/2);
+        plyHero.setPosition(sphHero.getPos().x, sphHero.getPos().y);
         plyObj.setOrigin(obFloor.getOriginX(), obFloor.getOriginY());
         plyObj.setPosition(obFloor.getX(), obFloor.getY());
 
         if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {
-            sphHero.setPos(sphHero.getPos().x, obFloor.getY() + obFloor.getHeight()/2);
+            sphHero.setPos(sphHero.getPos().x, obFloor.getY() + sphHero.getHeight() - 15);
             System.out.println("yeouch");
             sphHero.setVel(sphHero.getVel().x, 0);
         }
@@ -135,17 +133,18 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void dispose() {
     sphHero.getTexture().dispose();
     bgBackground.getTexture().dispose();
+    obFloor.getTexture().dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case 29:
+            case 29: //A
                 sphHero.setVel(-5, sphHero.getVel().y);
                 System.out.println("a");
                 isAPressed = true;
                 break;
-            case 32:
+            case 32: //D
                 sphHero.setVel(5, sphHero.getVel().y);
                 System.out.println("d");
                 isDPressed = true;
