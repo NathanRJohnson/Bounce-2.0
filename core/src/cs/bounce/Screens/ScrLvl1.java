@@ -1,13 +1,13 @@
 package cs.bounce.Screens;
 
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.SprBackground;
@@ -31,37 +31,42 @@ public class ScrLvl1 implements Screen, InputProcessor {
     OrthographicCamera oc = new OrthographicCamera();
     //Floor
     SprFloor flGround;
-    SprPlatform ptPlatformA , ptPlatformLong;
+    SprPlatform ptPlatformA, ptPlatformLong;
     ShapeRenderer sr;
+    Polygon polyHitBox;
     //Vectors
     Vector2 v2Normal;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
-    }
-
-    @Override
-    public void show() {
-        oc.setToOrtho(false,800,400);
+        Gdx.input.setInputProcessor((this));
+        oc.setToOrtho(false, 800, 400);
         batch = new SpriteBatch();
         //Textures
         txCity = new Texture("bg_city.png");
-        txJumper = new Texture("hero_yeetgirl.png");
+        txJumper = new Texture("wall.jpg");
         txFloor = new Texture("fl_ground.png");
         //Backgrounds
         bgCity = new SprBackground(txCity);
         //Jumper
-        sphHero = new SprHero(txJumper, 200,150);
+        sphHero = new SprHero(txJumper, 0, 30000);
         //Floor
         flGround = new SprFloor(txFloor);
-        ptPlatformA = new SprPlatform(txFloor, 100,200,100,30);
-        ptPlatformLong = new SprPlatform(txFloor, 400,240,200,30);
+        ptPlatformA = new SprPlatform(txFloor, 100, 200, 100, 30);
+        ptPlatformLong = new SprPlatform(txFloor, 400, 240, 200, 30);
         sr = new ShapeRenderer();
+        polyHitBox = new Polygon(new float[]{sphHero.getLoc().x, sphHero.getLoc().y,
+                sphHero.getLoc().x + sphHero.getWidth(), sphHero.getLoc().y,
+                sphHero.getLoc().x + sphHero.getWidth(), sphHero.getLoc().y + sphHero.getHeight(),
+                sphHero.getLoc().x, sphHero.getLoc().y + sphHero.getHeight()});
+        polyHitBox.setOrigin(sphHero.getLoc().x, sphHero.getLoc().y);
+    }
 
 
-        //Vector
+    @Override
+    public void show() {
 
-        v2Normal = new Vector2(0,1);
+
 
     }
 
@@ -74,6 +79,15 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ptPlatformA.draw(batch);
         ptPlatformLong.draw(batch);
         batch.end();
+        polyHitBox.setVertices(new float[]{sphHero.getLoc().x, sphHero.getLoc().y,
+                sphHero.getLoc().x + sphHero.getWidth(), sphHero.getLoc().y,
+                sphHero.getLoc().x + sphHero.getWidth(), sphHero.getLoc().y + sphHero.getHeight(),
+                sphHero.getLoc().x, sphHero.getLoc().y + sphHero.getHeight()});
+        polyHitBox.setOrigin(sphHero.getLoc().x, sphHero.getLoc().y);
+
+        //  System.out.println("Hitbox x: " +polyHitBox.getOriginX()+  " , Hero x: " + sphHero.getLoc().x );
+        System.out.println(sphHero.getHeight() + " " + sphHero.getLoc().y);
+
 
         sr.begin(ShapeRenderer.ShapeType.Line);
         sr.setProjectionMatrix(oc.combined);
@@ -117,15 +131,16 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-    sphHero.getTexture().dispose();
-    bgCity.getTexture().dispose();
-    flGround.getTexture().dispose();
+        sphHero.getTexture().dispose();
+        bgCity.getTexture().dispose();
+        flGround.getTexture().dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
         return false;
     }
+
 
     @Override
     public boolean keyUp(int keycode) {
@@ -134,6 +149,15 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
+        System.out.println("A");
+
+        if (character == 'D') {
+            //  sphHero.setVel(5,0);
+            System.out.println("D");
+        } else if (character == 'A') {
+            //  sphHero.setVel(-5,0);
+            System.out.println("A");
+        }
         return false;
     }
 

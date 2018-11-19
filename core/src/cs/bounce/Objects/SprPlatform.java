@@ -18,7 +18,7 @@ public class SprPlatform extends Sprite {
     Boolean isTouchBottom;
     Polygon polyPlatform;
     Vector2 v2TopL, v2TopR, v2BotL, v2BotR;
-  
+
 
 
     public SprPlatform(Texture tx, float fX, float fY, float fW, float fH) {
@@ -46,7 +46,6 @@ public class SprPlatform extends Sprite {
         Polygon polyHero = new Polygon(new float[] { 0, 0, h.getWidth(), 0, h.getWidth(), h.getHeight(), 0, h.getHeight()});
         polyHero.setPosition(h.getLoc().x, h.getLoc().y);
         if (Intersector.intersectLinePolygon(v2TopR , v2TopL, polyHero) && Intersector.intersectLinePolygon(v2TopR , v2BotR, polyHero) && Intersector.intersectLinePolygon(v2TopL , v2BotL, polyHero)) {
-            n++;
             System.out.println("Hit");
             return true;
         }

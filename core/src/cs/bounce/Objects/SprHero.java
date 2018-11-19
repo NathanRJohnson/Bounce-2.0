@@ -24,24 +24,30 @@ public class SprHero extends Sprite implements InputProcessor {
         v2Acc = new Vector2(0, 0);
         v2CurrentPos = new Vector2(v2Loc);
         v2Gravity = new Vector2(0,-1);
-        //setPosition(v2Loc.x, v2Loc.y);
+
         setSize(100, 100);
         setFlip(true, false);
+        setOrigin(v2Loc.x, v2Loc.y);
         canJump = true;
         v2CurrentPos.equals(v2Loc);
         fmaxHeight = v2CurrentPos.y + 100;
         polyHero = new Polygon(new float[] {0,0,0,0,0,0,0,0});
-       // polyHero.setPosition(v2Loc.x, v2Loc.y);
-
-
-        //rectLowerHalf = new Rectangle(v2Loc.x, v2Loc.y - 50, 100,50 );
 
     }
     public void update()//Grouping Function
     {
-        polyHero.setVertices(new float[] {v2Loc.x, v2Loc.y, v2Loc.x +getWidth(), v2Loc.y, v2Loc.x +getWidth(), v2Loc.y + getHeight(), v2Loc.x, v2Loc.y + getHeight()});
-        move();
-        jump();
+
+        v2Vel.add(v2Acc);
+        v2Loc.add(v2Vel);
+        setPosition(v2Loc.x, v2Loc.y);
+        polyHero.setVertices(new float[] {v2Loc.x, v2Loc.y,
+                v2Loc.x +getWidth(), v2Loc.y,
+                v2Loc.x +getWidth(), v2Loc.y + getHeight(),
+                v2Loc.x, v2Loc.y + getHeight()});
+        v2Vel.setZero();
+
+
+
         applyForce(v2Gravity);
        // System.out.println(canJump);
     }
@@ -51,10 +57,8 @@ public class SprHero extends Sprite implements InputProcessor {
     }
 
     void move() {
-        v2Vel.add(v2Acc);
-        v2Loc.add(v2Vel);
-        setPosition(v2Loc.x, v2Loc.y);
-        v2Vel.setZero();
+
+
 
         //Left Right Movement
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -105,6 +109,11 @@ public class SprHero extends Sprite implements InputProcessor {
         return v2Vel;
     }
 
+    public void setVel(float x, float y){
+        v2Vel.x = x;
+        v2Vel.y = y;
+    }
+
     public Vector2 getAcc(){
         return v2Acc;
     }
@@ -116,9 +125,12 @@ public class SprHero extends Sprite implements InputProcessor {
     public boolean getJumpState(){
         return canJump;
     }
+
     public void setJumpState(boolean b){
         canJump = b;
     }
+
+
 
     @Override
     public boolean keyDown(int keycode) {
