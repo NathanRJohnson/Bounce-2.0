@@ -78,7 +78,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.polygon(obFloor.getPolygon().getTransformedVertices());
         sr.end();
 
-        obFloor.isHit(sphHero.getPolygon(),sphHero);
+        obFloor.isHit(sphHero);
 
 
   /*     if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {

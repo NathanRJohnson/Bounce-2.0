@@ -28,11 +28,6 @@ public class SprObstacle extends Sprite {
 
 
   //Used for walls, platforms etc. (it stops the heros movement)
-  public boolean isHit(SprHero s) {
-
-
-    return false;
-  }
 
   //Used for harmful obstacles such as spikes (eventually this will trigger his death)
   public boolean isKilled(SprHero s) {

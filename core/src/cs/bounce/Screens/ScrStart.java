@@ -20,10 +20,6 @@ public class ScrStart implements Screen, InputProcessor {
 
     public ScrStart(GamMain main) {
         this.main = main;
-    }
-
-    @Override
-    public void show() {
         //OC Camera
         oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -33,7 +29,6 @@ public class ScrStart implements Screen, InputProcessor {
         //Textures
         txStart = new Texture("bg_start.jpg");
         //Sprites
-
         batch = new SpriteBatch();
         //SprBackground
         bgStart = new SprBackground(txStart);
@@ -47,7 +42,12 @@ public class ScrStart implements Screen, InputProcessor {
     }
 
     @Override
+    public void show() {
+    }
+
+    @Override
     public void render(float delta) {
+        oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         changeScreen();
