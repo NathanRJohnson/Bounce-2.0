@@ -145,7 +145,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
                 isDPressed = true;
                 break;
             case 51:
-                if (sphHero.getJumpState() && sphHero.getPos().y != sphHero.getMaxheight()) {
+                if (sphHero.getJumpState() && sphHero.getPos().y <= sphHero.getMaxheight()) {
                     System.out.println("w");
                     sphHero.setMaxHeight();
                     sphHero.setVel(sphHero.getVel().x, 15);
