@@ -26,6 +26,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     SprHero sphHero;
     ObjPlatform obFloor;
+    ObjPlatform objPlatform;
     SprBackground bgBackground;
 
     OrthographicCamera oc = new OrthographicCamera();
@@ -45,6 +46,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
         obFloor = new ObjPlatform("fl_ground.png",0,0,700,100);
+        objPlatform = new ObjPlatform("fl_ground.png", 400,300, 300, 50);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
@@ -65,6 +67,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         obFloor.draw(batch);
+        objPlatform.draw(batch);
         sphHero.draw(batch);
         batch.end();
 
@@ -76,9 +79,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.polygon(sphHero.getPolygon().getTransformedVertices());
         sr.setColor(Color.BLUE);
         sr.polygon(obFloor.getPolygon().getTransformedVertices());
+        sr.setColor(Color.GREEN);
+        sr.polygon(objPlatform.getPolygon().getTransformedVertices());
         sr.end();
 
-        obFloor.isHit(sphHero.getPolygon(),sphHero);
+        obFloor.isHit(sphHero);
+        objPlatform.isHit(sphHero);
 
 
   /*     if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {
