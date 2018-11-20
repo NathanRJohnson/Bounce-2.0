@@ -25,7 +25,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Texture txBackground;
 
     SprHero sphHero;
-    ObjPlatform obFloor;
+    SprObstacle obPlatformA;
+    SprObstacle obFloor;
+
     SprBackground bgBackground;
 
     OrthographicCamera oc = new OrthographicCamera();
@@ -44,7 +46,10 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txJumper = new Texture("jumper.png");
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
-        obFloor = new ObjPlatform("fl_ground.png",0,0,700,100);
+
+        obPlatformA = new SprObstacle("fl_ground.png", 200,300,150,50);
+        obFloor = new SprObstacle("fl_ground.png",0,0,700,100);
+
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
@@ -59,17 +64,19 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        System.out.println(sphHero.getJumpState());
         oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         obFloor.draw(batch);
+      //  obPlatformA.draw(batch);
         sphHero.draw(batch);
         batch.end();
 
         sr.begin(ShapeRenderer.ShapeType.Line);
         sr.setProjectionMatrix(oc.combined);
+       // sr.setColor(Color.GREEN);
+       // sr.polygon(obPlatformA.getPolygon().getTransformedVertices());
         sr.setColor(Color.RED);
         sr.line(0, sphHero.getMaxheight(), Gdx.graphics.getWidth(), sphHero.getMaxheight());
         sr.setColor(Color.BLACK);
@@ -78,14 +85,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.polygon(obFloor.getPolygon().getTransformedVertices());
         sr.end();
 
+        //obPlatformA.isHit(sphHero.getPolygon(),sphHero);
         obFloor.isHit(sphHero.getPolygon(),sphHero);
-
-
-   /*     if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {
-            sphHero.setPos(sphHero.getPos().x, obFloor.getY() + sphHero.getHeight() - 15);
-            System.out.println("yeouch");
-            sphHero.setVel(sphHero.getVel().x, 0);
-        } */
 
 
         //System.out.println(jumper.getV2Pos());
