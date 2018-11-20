@@ -48,6 +48,7 @@ public class ScrLevels implements Screen {
 
     @Override
     public void render(float delta) {
+        oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         changeScreen();

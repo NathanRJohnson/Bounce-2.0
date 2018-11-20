@@ -13,7 +13,7 @@ public class SprButton extends Sprite{
         nW = _nW;
         nH = _nH;
         setPosition(nX, nY);
-        setFlip(false, true);
+        //setFlip(false, true);
         setSize(nW, nH);
     }
     //Thanks Ameer and Joel!!!!!!
