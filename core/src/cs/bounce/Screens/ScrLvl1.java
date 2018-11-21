@@ -45,12 +45,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
-        obFloor = new ObjPlatform("fl_ground.png",0,0,700,100);
-        objPlatform = new ObjPlatform("fl_ground.png", 400,300, 300, 50);
+        obFloor = new ObjPlatform("fl_ground.png", 0, 0, 700, 100);
+        objPlatform = new ObjPlatform("fl_ground.png", 200, 200, 300, 50);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
-        v2Gravity = new Vector2(0,-1);
+        v2Gravity = new Vector2(0, -1);
 
         Gdx.input.setInputProcessor(this);
     }
@@ -61,7 +61,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        System.out.println(sphHero.getJumpState());
         oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
@@ -85,17 +84,10 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
         obFloor.isHit(sphHero);
         objPlatform.isHit(sphHero);
+        if (ObjPlatform.getIsHitting())
+            System.out.println(ObjPlatform.getIsHitting());
 
-
-  /*     if (Intersector.overlapConvexPolygons(plyHero,plyObj)) {
-           sphHero.setPos(sphHero.getPos().x, obFloor.getY() + sphHero.getHeight() - 15);
-           System.out.println("yeouch");
-           sphHero.setVel(sphHero.getVel().x, 0);
-       } */
-
-
-        //System.out.println(jumper.getV2Pos());
-        if (!sphHero.getJumpState()) {
+        if (!sphHero.getJumpState() && !ObjPlatform.getIsHitting()) {
             // System.out.println("The laws of physics are in effect");
             sphHero.applyForce(v2Gravity);
         }
@@ -103,7 +95,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
 
         if (!isAPressed && !isDPressed)
-            sphHero.setVel(0,sphHero.getVel().y);
+            sphHero.setVel(0, sphHero.getVel().y);
 
         if (sphHero.getPos().y >= sphHero.getMaxheight()) //sets can jump false when Hero reaches maximum jump height
             sphHero.setCanJump(false);
@@ -151,7 +143,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
                 isDPressed = true;
                 break;
             case 51:
-                if (sphHero.getJumpState() && sphHero.getPos().y != sphHero.getMaxheight()) {
+                if (sphHero.getJumpState() && sphHero.getPos().y <= sphHero.getMaxheight()) {
                     System.out.println("w");
                     sphHero.setMaxHeight();
                     sphHero.setVel(sphHero.getVel().x, 15);
