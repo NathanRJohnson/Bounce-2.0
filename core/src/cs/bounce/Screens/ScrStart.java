@@ -1,9 +1,11 @@
 package cs.bounce.Screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprButton;
@@ -17,15 +19,15 @@ public class ScrStart implements Screen, InputProcessor {
     OrthographicCamera oc;
     Vector2 vMouse;
     Texture txStart;
+    ShapeRenderer shapeRenderer;
 
     public ScrStart(GamMain main) {
         this.main = main;
         //OC Camera
         oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.update();
         Gdx.input.setInputProcessor(this);
-
         //Textures
         txStart = new Texture("bg_start.jpg");
         //Sprites
@@ -34,11 +36,13 @@ public class ScrStart implements Screen, InputProcessor {
         bgStart = new SprBackground(txStart);
 
         //Buttons
-        btnStart = new SprButton(200,200,200, 200,"start_button.png");
-
+        btnStart = new SprButton(200,0,200, 200,"start_button.png");
 
         //Mouse
         vMouse = new Vector2(0,0);
+
+        //ShapeRender
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -54,6 +58,12 @@ public class ScrStart implements Screen, InputProcessor {
         bgStart.draw(batch);
         btnStart.draw(batch);
         batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setProjectionMatrix(oc.combined);
+        shapeRenderer.setColor(Color.BLUE);
+        shapeRenderer.polygon(btnStart.getPlyButton().getTransformedVertices());
+        shapeRenderer.end();
     }
 
     private void changeScreen() {

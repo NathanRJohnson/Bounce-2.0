@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 
 public class SprButton extends Sprite{
     int nX, nY, nW, nH;
-    public Polygon plyButton;
+    private Polygon plyButton;
     public SprButton(int _nX, int _nY, int _nW, int _nH, String sFile){
         super(new Texture(Gdx.files.internal(sFile)));
         nX = _nX;
@@ -15,7 +15,7 @@ public class SprButton extends Sprite{
         nW = _nW;
         nH = _nH;
         setPosition(nX, nY);
-        //setFlip(false, true);
+        //setFlip(false, false);
         setSize(nW, nH);
         plyButton = new Polygon(new float[]{ nX,nY,
                 nX + nW,nY,
@@ -32,4 +32,7 @@ public class SprButton extends Sprite{
         return false;
     }
 
+    public Polygon getPlyButton() {
+        return plyButton;
+    }
 }

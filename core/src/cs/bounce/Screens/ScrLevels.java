@@ -3,10 +3,12 @@ package cs.bounce.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprButton;
@@ -18,16 +20,16 @@ public class ScrLevels implements Screen {
     SpriteBatch batch;
     Texture txbgLevels;
     SprButton btnLvl1,  btnLvl2, btnBack;
-    OrthographicCamera oc;
+    OrthographicCamera oc = new OrthographicCamera();
     Vector2 vMouse;
     SprBackground sprbgLevels;
+    ShapeRenderer shapeRenderer;
 
     public ScrLevels(GamMain main) {
             this.main = main;
            // Gdx.input.setInputProcessor(this);
         //OC Camera
-        oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        oc.setToOrtho(false, 700, 700);
+        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Texture
         txbgLevels = new Texture("bg_level_select.jpg");
         batch = new SpriteBatch();
@@ -39,8 +41,11 @@ public class ScrLevels implements Screen {
         btnLvl2 = new SprButton(200,400,100, 100,"lvl2_select.png");
         //Mouse
         vMouse = new Vector2(0,0);
+        //ShapeRenderer
+        shapeRenderer = new ShapeRenderer();
         System.out.println("Level 1 is just Gravity");
         System.out.println("Level 2 has hit testing");
+
     }
 
     public void show() {
@@ -57,6 +62,16 @@ public class ScrLevels implements Screen {
         btnLvl2.draw(batch);
         btnBack.draw(batch);
         batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setProjectionMatrix(oc.combined);
+        shapeRenderer.setColor(Color.BLUE);
+        shapeRenderer.polygon(btnLvl1.getPlyButton().getTransformedVertices());
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.polygon(btnLvl2.getPlyButton().getTransformedVertices());
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.polygon(btnBack.getPlyButton().getTransformedVertices());
+        shapeRenderer.end();
     }
 
     private void changeScreen() {
