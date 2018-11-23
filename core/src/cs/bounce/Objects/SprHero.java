@@ -37,7 +37,6 @@ public class SprHero extends Sprite {
 
     }
 
-
     public void applyForce(Vector2 v) {
         Vector2 v2Copy = v.cpy();
         v2Acc.add(v2Copy);

@@ -35,6 +35,26 @@ public class SprObstacle extends Sprite {
         return fY;
     }
 
+    public Vector2 getBotLeft(){
+        Vector2 v = new Vector2(fX, fY);
+        return v;
+    }
+
+    public Vector2 getBotRight(){
+        Vector2 v = new Vector2(fX + fW, fY);
+        return v;
+    }
+
+    public Vector2 getTopRight(){
+        Vector2 v = new Vector2(fX + fW, fY + fH);
+        return v;
+    }
+
+    public Vector2 getTopLeft(){
+        Vector2 v = new Vector2(fX, fY + fH);
+        return v;
+    }
+
 
     //Used for walls, platforms etc. (it stops the heros movement)
 

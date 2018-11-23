@@ -48,7 +48,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero = new SprHero(txJumper, 250, 250);
         obFloor = new ObjPlatform("fl_ground.png", 0, 0, 700, 100);
         objPlatform = new ObjPlatform("fl_ground.png", 200, 200, 300, 50);
-        uhhhhh = new ObjPlatform("fl_ground.png", 350, 300,200,50);
+        uhhhhh = new ObjPlatform("fl_ground.png", 350, 300, 200, 50);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
@@ -63,7 +63,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-       // System.out.println(sphHero.getJumpState());
+        // System.out.println(sphHero.getJumpState());
         oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
@@ -80,19 +80,25 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.line(0, sphHero.getMaxheight(), Gdx.graphics.getWidth(), sphHero.getMaxheight());
         sr.setColor(Color.BLACK);
         sr.polygon(sphHero.getPolygon().getTransformedVertices());
+        sr.setColor(Color.ORANGE);
+        sr.line(objPlatform.getTopLeft(), objPlatform.getTopRight());
         sr.setColor(Color.BLUE);
         sr.polygon(obFloor.getPolygon().getTransformedVertices());
         sr.setColor(Color.GREEN);
         sr.polygon(objPlatform.getPolygon().getTransformedVertices());
         sr.end();
 
-        obFloor.isHit(sphHero);
-        objPlatform.isHit(sphHero);
-        uhhhhh.isHit(sphHero);
-
-        if (!sphHero.getJumpState()) {
+   //     if (objPlatform.checkHit(sphHero) || obFloor.checkHit(sphHero)) {
+            obFloor.isHit(sphHero);
+            objPlatform.isHit(sphHero);
+            uhhhhh.isHit(sphHero);
+   //     }
+        if(!obFloor.checkHit(sphHero) && !objPlatform.checkHit(sphHero)){
+            sphHero.setCanJump(false);
             sphHero.applyForce(v2Gravity);
         }
+
+
         sphHero.update();
 
 
@@ -138,6 +144,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
             case 29: //A
                 sphHero.setVel(-5, sphHero.getVel().y);
                 System.out.println("a");
+
                 isAPressed = true;
                 break;
             case 32: //D
@@ -149,9 +156,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
                 if (sphHero.getJumpState()) {
                     System.out.println("w");
                     sphHero.setMaxHeight();
-                    sphHero.setVel(sphHero.getVel().x, 15);
+                    sphHero.setVel(sphHero.getVel().x, 20);
 
-                    System.out.println(sphHero.getVel());
 
                 }
                 break;
