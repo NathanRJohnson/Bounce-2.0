@@ -10,7 +10,6 @@ public class ObjPlatform extends SprObstacle {
     private static boolean isTopHitting, isBotHitting, isLeftHitting, isRightHitting;
     private boolean hitEdge = false;
     private Vector2 v2Normal = new Vector2(0, 1);
-
     public ObjPlatform(String sFile, float fX, float fY, float fW, float fH) {
         super(sFile, fX, fY, fW, fH);
 
@@ -45,8 +44,13 @@ public class ObjPlatform extends SprObstacle {
         }
 
         if (isRightHitting || isLeftHitting){
-                sHero.setVel(0, sHero.getVel().y * -1);
-                sHero.setVel(0, sHero.getVel().y / 2);
+            if (hitEdge) {
+                System.out.println("Activate in Noah is wrong");
+                sHero.setVel(sHero.getVel().setZero());
+                sHero.setPos(sHero.getX(),sHero.getY());
+                hitEdge = false;
+            }
+
             }
         }
 
@@ -72,7 +76,7 @@ public class ObjPlatform extends SprObstacle {
             System.out.println("Hit Right");
             return true;
         }
-
+        hitEdge = false;
         return false;
     }
 
