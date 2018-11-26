@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 public class ObjPlatform extends SprObstacle {
-    private static boolean isHitting;
+    private static boolean isTopHitting, isBotHitting, isLeftHitting, isRightHitting;
+    private boolean hitEdge = false;
     private Vector2 v2Normal = new Vector2(0, 1);
 
     public ObjPlatform(String sFile, float fX, float fY, float fW, float fH) {
@@ -17,11 +18,11 @@ public class ObjPlatform extends SprObstacle {
 
 
     public void isHit(SprHero sHero) {
-        // isHitting = Intersector.overlapConvexPolygons(sHero.getPolygon(), plyObstacle);
-        //  System.out.println("yuh");
+        isTopHitting = Intersector.intersectSegmentPolygon(getTopRight(), getTopLeft(), sHero.getPolygon());
+        isBotHitting = Intersector.intersectSegmentPolygon(getBotRight(), getBotLeft(), sHero.getPolygon());
+
         if (!sHero.getJumpState()) {
-            if (checkHit(sHero)) {
-                System.out.println("GUEHGUHGUEGU");
+            if (isTopHitting) {
                 if (fY != 0) {
                     sHero.setPos(sHero.getPos().x, fY + sHero.getHeight() / 2 - 15);
                     sHero.setMaxHeight();
@@ -31,21 +32,44 @@ public class ObjPlatform extends SprObstacle {
                 }
                 sHero.setVel(sHero.getVel().x, 0);
                 sHero.setCanJump(true);
+                hitEdge = false;
             }
         }
-/*
-        else if (sHero.getJumpState()) {
-            if (!checkHit(sHero)){
-                sHero.setCanJump(false);
+        if (isBotHitting){
+            sHero.setCanJump(false);
+
+            if (sHero.getVel().y > 0) {
+                sHero.setVel(sHero.getVel().x, sHero.getVel().y * -1);
+                sHero.setVel(sHero.getVel().x, sHero.getVel().y / 2);
             }
         }
-*/
-    }
+
+        if (isRightHitting || isLeftHitting){
+                sHero.setVel(0, sHero.getVel().y * -1);
+                sHero.setVel(0, sHero.getVel().y / 2);
+            }
+        }
 
     public boolean checkHit(SprHero sHero) {
-        isHitting = Intersector.overlapConvexPolygons(sHero.getPolygon(), plyObstacle);
-        if (isHitting) {
-            System.out.println("Hit");
+        //isHitting = Intersector.overlapConvexPolygons(sHero.getPolygon(), plyObstacle);
+        isTopHitting = Intersector.intersectSegmentPolygon(getTopRight(), getTopLeft(), sHero.getPolygon());
+        isBotHitting = Intersector.intersectSegmentPolygon(getBotRight(), getBotLeft(), sHero.getPolygon());
+        isLeftHitting = Intersector.intersectSegmentPolygon(getTopLeft(), getBotLeft(), sHero.getPolygon());
+        isRightHitting = Intersector.intersectSegmentPolygon(getTopRight(), getBotRight(), sHero.getPolygon());
+        if (isTopHitting) {
+           // System.out.println("Hit Top");
+            return true;
+        }
+        if (isBotHitting){
+          //  System.out.println("Hit Bot");
+            return true;
+        }
+        if (isLeftHitting){
+            System.out.println("Hit Left");
+            return true;
+        }
+        if (isRightHitting){
+            System.out.println("Hit Right");
             return true;
         }
 

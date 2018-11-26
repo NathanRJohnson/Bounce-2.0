@@ -80,12 +80,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.line(0, sphHero.getMaxheight(), Gdx.graphics.getWidth(), sphHero.getMaxheight());
         sr.setColor(Color.BLACK);
         sr.polygon(sphHero.getPolygon().getTransformedVertices());
-        sr.setColor(Color.ORANGE);
-        sr.line(objPlatform.getTopLeft(), objPlatform.getTopRight());
         sr.setColor(Color.BLUE);
         sr.polygon(obFloor.getPolygon().getTransformedVertices());
         sr.setColor(Color.GREEN);
         sr.polygon(objPlatform.getPolygon().getTransformedVertices());
+        sr.setColor(Color.BLACK);
+        sr.line(objPlatform.getBotRight(), objPlatform.getBotLeft());
         sr.end();
 
    //     if (objPlatform.checkHit(sphHero) || obFloor.checkHit(sphHero)) {

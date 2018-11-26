@@ -87,6 +87,26 @@ public class SprHero extends Sprite {
     }
     public Polygon getPolygon(){ return plyHero;}
 
+    public Vector2 getBotLeft(){
+        Vector2 v = new Vector2(fX, fY);
+        return v;
+    }
+
+    public Vector2 getBotRight(){
+        Vector2 v = new Vector2(fX + 100, fY);
+        return v;
+    }
+
+    public Vector2 getTopRight(){
+        Vector2 v = new Vector2(fX + 100, fY + 100);
+        return v;
+    }
+
+    public Vector2 getTopLeft(){
+        Vector2 v = new Vector2(fX, fY + 100);
+        return v;
+    }
+
 }
 
 
