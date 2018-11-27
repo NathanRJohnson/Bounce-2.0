@@ -47,7 +47,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
         obFloor = new ObjPlatform("fl_ground.png", 0, 0, 700, 100);
-        objPlatform = new ObjPlatform("fl_ground.png", 200, 100, 100, 100);
+        objPlatform = new ObjPlatform("fl_ground.png", 100, 200, 100, 150);
         uhhhhh = new ObjPlatform("fl_ground.png", 350, 300, 200, 50);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;

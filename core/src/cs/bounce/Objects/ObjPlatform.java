@@ -23,7 +23,7 @@ public class ObjPlatform extends SprObstacle {
         if (!sHero.getJumpState()) {
             if (isTopHitting) {
                 if (fY != 0) {
-                    sHero.setPos(sHero.getPos().x, fY + sHero.getHeight() / 2 - 15);
+                    sHero.setPos(sHero.getPos().x, fY + getHeight() - 15);
                     sHero.setMaxHeight();
                 } else {
                     sHero.setPos(sHero.getPos().x, sHero.getHeight() - 15);
@@ -45,7 +45,6 @@ public class ObjPlatform extends SprObstacle {
 
         if (isRightHitting || isLeftHitting){
             if (hitEdge) {
-                System.out.println("Activate in Noah is wrong");
                 sHero.setVel(sHero.getVel().setZero());
                 sHero.setPos(sHero.getX(),sHero.getY());
                 hitEdge = false;
