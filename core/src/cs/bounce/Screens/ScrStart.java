@@ -27,6 +27,7 @@ public class ScrStart implements Screen, InputProcessor {
         oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.update();
+        System.out.println(Gdx.graphics.getWidth()+" "+ Gdx.graphics.getHeight() );
         Gdx.input.setInputProcessor(this);
         //Textures
         txStart = new Texture("bg_start.jpg");
@@ -36,7 +37,7 @@ public class ScrStart implements Screen, InputProcessor {
         bgStart = new SprBackground(txStart);
 
         //Buttons
-        btnStart = new SprButton(200,0,200, 200,"start_button.png");
+        btnStart = new SprButton(200,200,200, 200,"start_button.png");
 
         //Mouse
         vMouse = new Vector2(0,0);

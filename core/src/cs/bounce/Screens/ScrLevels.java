@@ -36,9 +36,9 @@ public class ScrLevels implements Screen {
         //SprBackground
         sprbgLevels = new SprBackground(txbgLevels);
         //Buttons
-        btnBack = new SprButton(0,600,100, 100,"back.png");
-        btnLvl1 = new SprButton(50,400,100, 100,"lvl1_select.png");
-        btnLvl2 = new SprButton(200,400,100, 100,"lvl2_select.png");
+        btnBack = new SprButton(0,380,100, 100,"back.png");
+        btnLvl1 = new SprButton(50,250,100, 100,"lvl1_select.png");
+        btnLvl2 = new SprButton(200,250,100, 100,"lvl2_select.png");
         //Mouse
         vMouse = new Vector2(0,0);
         //ShapeRenderer

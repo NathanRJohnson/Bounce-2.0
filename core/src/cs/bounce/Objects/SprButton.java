@@ -26,7 +26,9 @@ public class SprButton extends Sprite{
 
     //Thanks Ameer and Joel!!!!!!
     public boolean isMousedOver(){
-        if(plyButton.contains(Gdx.input.getX(), Gdx.input.getY())){
+        int nMouseY;
+        nMouseY = 480 - Gdx.input.getY();
+        if(plyButton.contains(Gdx.input.getX(), nMouseY)){
             return true;
         }
         return false;
