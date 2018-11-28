@@ -45,7 +45,7 @@ public class GamMain extends Game {
 			scrLvl1 = new ScrLvl1(this);
 			scrLvl2 = new ScrLvl2(this);
 			//scrLvl3 =new ScrLvl3(this);
-			updateScreen(2);
+			updateScreen(0);
 		}
 
 		@Override

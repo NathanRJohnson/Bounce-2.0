@@ -13,9 +13,9 @@ public class ObjPlatform extends SprObstacle {
 
     }
 
-    public void isHit(Polygon pHero, SprHero sHero) {
+    public void isHit(SprHero sHero) {
         if (!sHero.getJumpState()) {
-            if (Intersector.overlapConvexPolygons(pHero, plyObstacle)) {
+            if (Intersector.overlapConvexPolygons(sHero.getPolygon(), plyObstacle)) {
                 sHero.setCanJump(true);
                 sHero.setPos(sHero.getPos().x, plyObstacle.getY() + sHero.getHeight() - 15);
                 sHero.setVel(sHero.getVel().x, 0);

@@ -1,9 +1,11 @@
 package cs.bounce.Screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Objects.SprBackground;
 import cs.bounce.Objects.SprButton;
@@ -17,23 +19,19 @@ public class ScrStart implements Screen, InputProcessor {
     OrthographicCamera oc;
     Vector2 vMouse;
     Texture txStart;
+    ShapeRenderer shapeRenderer;
 
     public ScrStart(GamMain main) {
         this.main = main;
-    }
-
-    @Override
-    public void show() {
         //OC Camera
         oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         oc.update();
+        System.out.println(Gdx.graphics.getWidth()+" "+ Gdx.graphics.getHeight() );
         Gdx.input.setInputProcessor(this);
-
         //Textures
         txStart = new Texture("bg_start.jpg");
         //Sprites
-
         batch = new SpriteBatch();
         //SprBackground
         bgStart = new SprBackground(txStart);
@@ -41,19 +39,32 @@ public class ScrStart implements Screen, InputProcessor {
         //Buttons
         btnStart = new SprButton(200,200,200, 200,"start_button.png");
 
-
         //Mouse
         vMouse = new Vector2(0,0);
+
+        //ShapeRender
+        shapeRenderer = new ShapeRenderer();
+    }
+
+    @Override
+    public void show() {
     }
 
     @Override
     public void render(float delta) {
+        oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         changeScreen();
         bgStart.draw(batch);
         btnStart.draw(batch);
         batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setProjectionMatrix(oc.combined);
+        shapeRenderer.setColor(Color.BLUE);
+        shapeRenderer.polygon(btnStart.getPlyButton().getTransformedVertices());
+        shapeRenderer.end();
     }
 
     private void changeScreen() {
@@ -111,6 +122,7 @@ public class ScrStart implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         return false;
     }
 
