@@ -27,7 +27,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     SprHero sphHero;
     ObjPlatform obFloor;
     ObjPlatform objPlatform;
-    ObjPlatform uhhhhh;
+    ObjPlatform objPlatform2;
     SprBackground bgBackground;
 
     OrthographicCamera oc = new OrthographicCamera();
@@ -47,8 +47,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
         obFloor = new ObjPlatform("fl_ground.png", 0, 0, 700, 100);
-        objPlatform = new ObjPlatform("fl_ground.png", 100, 200, 100, 150);
-        uhhhhh = new ObjPlatform("fl_ground.png", 350, 300, 200, 50);
+        objPlatform = new ObjPlatform("fl_ground.png", 100, 150, 100, 100);
+        objPlatform2 = new ObjPlatform("fl_ground.png", 350, 300, 200, 50);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
@@ -70,7 +70,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         bgBackground.draw(batch);
         obFloor.draw(batch);
         objPlatform.draw(batch);
-        uhhhhh.draw(batch);
+        objPlatform2.draw(batch);
         sphHero.draw(batch);
         batch.end();
 
@@ -78,22 +78,23 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.setProjectionMatrix(oc.combined);
         sr.setColor(Color.RED);
         sr.line(0, sphHero.getMaxheight(), Gdx.graphics.getWidth(), sphHero.getMaxheight());
-        sr.setColor(Color.BLACK);
-        sr.polygon(sphHero.getPolygon().getTransformedVertices());
+
         sr.setColor(Color.BLUE);
-        sr.polygon(obFloor.getPolygon().getTransformedVertices());
+        sr.polygon(sphHero.getPolygon().getTransformedVertices());
         sr.setColor(Color.GREEN);
         sr.polygon(objPlatform.getPolygon().getTransformedVertices());
         sr.setColor(Color.BLACK);
-        sr.line(objPlatform.getBotRight(), objPlatform.getBotLeft());
+        sr.line(objPlatform.getTopRight(), objPlatform.getBotRight());
+        sr.setColor(Color.BLACK);
+        sr.line(objPlatform.getTopLeft(), objPlatform.getBotLeft());
         sr.end();
 
-   //     if (objPlatform.checkHit(sphHero) || obFloor.checkHit(sphHero)) {
-            obFloor.isHit(sphHero);
-            objPlatform.isHit(sphHero);
-            uhhhhh.isHit(sphHero);
-   //     }
-        if(!obFloor.checkHit(sphHero) && !objPlatform.checkHit(sphHero)){
+        //     if (objPlatform.checkHit(sphHero) || obFloor.checkHit(sphHero)) {
+        obFloor.isHit(sphHero);
+        objPlatform.isHit(sphHero);
+        objPlatform2.isHit(sphHero);
+        //     }
+        if (!obFloor.checkHit(sphHero) && !objPlatform.checkHit(sphHero) && !objPlatform2.checkHit(sphHero)) {
             sphHero.setCanJump(false);
             sphHero.applyForce(v2Gravity);
         }
@@ -143,20 +144,16 @@ public class ScrLvl1 implements Screen, InputProcessor {
         switch (keycode) {
             case 29: //A
                 sphHero.setVel(-5, sphHero.getVel().y);
-                System.out.println("a");
-
                 isAPressed = true;
                 break;
             case 32: //D
                 sphHero.setVel(5, sphHero.getVel().y);
-                System.out.println("d");
                 isDPressed = true;
                 break;
-            case 51:
+            case 51: //W
                 if (sphHero.getJumpState()) {
-                    System.out.println("w");
                     sphHero.setMaxHeight();
-                    sphHero.setVel(sphHero.getVel().x, 20);
+                    sphHero.setVel(sphHero.getVel().x, 16);
 
 
                 }
