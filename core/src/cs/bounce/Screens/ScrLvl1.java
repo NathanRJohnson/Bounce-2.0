@@ -30,11 +30,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Boolean isDPressed;
 
     Vector2 v2Gravity;
+float camX, camY;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
         batch = new SpriteBatch();
-        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        oc.setToOrtho(false, 1000, 800);
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 250, 250);
@@ -45,7 +46,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         isAPressed = false;
         isDPressed = false;
         v2Gravity = new Vector2(0, -1);
-
+        float camX = sphHero.getX();
+        float camY = sphHero.getY();
         Gdx.input.setInputProcessor(this);
     }
 
@@ -56,6 +58,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         // System.out.println(sphHero.getJumpState());
+        //System.out.println(sphHero.getJumpState());
+        TrackingCamera();
         oc.update();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
@@ -88,7 +92,27 @@ public class ScrLvl1 implements Screen, InputProcessor {
         }
 
     }
-
+    private void TrackingCamera() {
+        oc.position.set(camX,camY + 300,0);
+        if (sphHero.getX() > camX + 75){
+            camX +=5;
+            System.out.println("Slide to the Right");
+        }
+        if (sphHero.getX() < camX - 75){
+            camX -=5;
+            System.out.println("Slide to the Left");
+        }
+        if (sphHero.getY() > camY + 350){
+            camY +=10;
+            System.out.println("Go up");
+        }
+        if (sphHero.getY() > -300) {
+            if (sphHero.getY() < camY + 100) {
+                camY -= 20;
+                System.out.println("Go down");
+            }
+        }
+    }
     @Override
     public void resize(int width, int height) {
 
