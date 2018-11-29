@@ -59,12 +59,6 @@ public class ScrStart implements Screen, InputProcessor {
         bgStart.draw(batch);
         btnStart.draw(batch);
         batch.end();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setProjectionMatrix(oc.combined);
-        shapeRenderer.setColor(Color.BLUE);
-        shapeRenderer.polygon(btnStart.getPlyButton().getTransformedVertices());
-        shapeRenderer.end();
     }
 
     private void changeScreen() {

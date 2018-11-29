@@ -43,8 +43,6 @@ public class ScrLevels implements Screen {
         vMouse = new Vector2(0,0);
         //ShapeRenderer
         shapeRenderer = new ShapeRenderer();
-        System.out.println("Level 1 is just Gravity");
-        System.out.println("Level 2 has hit testing");
 
     }
 
@@ -62,16 +60,6 @@ public class ScrLevels implements Screen {
         btnLvl2.draw(batch);
         btnBack.draw(batch);
         batch.end();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setProjectionMatrix(oc.combined);
-        shapeRenderer.setColor(Color.BLUE);
-        shapeRenderer.polygon(btnLvl1.getPlyButton().getTransformedVertices());
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.polygon(btnLvl2.getPlyButton().getTransformedVertices());
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.polygon(btnBack.getPlyButton().getTransformedVertices());
-        shapeRenderer.end();
     }
 
     private void changeScreen() {

@@ -30,22 +30,25 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Boolean isDPressed;
 
     Vector2 v2Gravity;
+    float camX;
+    float camY;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
         batch = new SpriteBatch();
-        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        oc.setToOrtho(false, 1000, 800);
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
-        sphHero = new SprHero(txJumper, 250, 250);
-        obFloor = new ObjPlatform("fl_ground.png", 0, 0, 700, 100);
+        sphHero = new SprHero(txJumper, 0, 200);
+        obFloor = new ObjPlatform("fl_ground.png", -700, 0, 1400, 100);
         objPlatform = new ObjPlatform("fl_ground.png", 100, 100, 100, 100);
         objPlatform2 = new ObjPlatform("fl_ground.png", 360, 270, 200, 50);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
         v2Gravity = new Vector2(0, -1);
-
+        float camX = sphHero.getX();
+        float camY = sphHero.getY();
         Gdx.input.setInputProcessor(this);
     }
 
@@ -56,7 +59,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         // System.out.println(sphHero.getJumpState());
+
         oc.update();
+        TrackingCamera();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
@@ -87,6 +92,28 @@ public class ScrLvl1 implements Screen, InputProcessor {
             sphHero.setCanJump(false);
         }
 
+    }
+
+    private void TrackingCamera() {
+        oc.position.set(camX, camY + 300, 0);
+        if (sphHero.getX() > camX + 75) {
+            camX += 5;
+            System.out.println("Slide to the Right");
+        }
+        if (sphHero.getX() < camX - 125) {
+            camX -= 5;
+            System.out.println("Slide to the Left");
+        }
+        if (sphHero.getY() > camY + 350) {
+            camY += 10;
+            System.out.println("Go up");
+        }
+        if (sphHero.getY() > -300) {
+            if (sphHero.getY() < camY + 100) {
+                camY -= 20;
+                System.out.println("Go down");
+            }
+        }
     }
 
     @Override
