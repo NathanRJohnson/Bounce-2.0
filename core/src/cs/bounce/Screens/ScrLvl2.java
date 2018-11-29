@@ -2,15 +2,8 @@ package cs.bounce.Screens;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Menu.GamMain;
-import cs.bounce.Objects.SprBackground;
-import cs.bounce.Objects.SprFloor;
-import cs.bounce.Objects.SprHero;
-import cs.bounce.Objects.SprObstacle;
+
 
 public class ScrLvl2 implements Screen, InputProcessor {
 
