@@ -43,8 +43,6 @@ public class ScrLevels implements Screen {
         vMouse = new Vector2(0,0);
         //ShapeRenderer
         shapeRenderer = new ShapeRenderer();
-        System.out.println("Level 1 is just Gravity");
-        System.out.println("Level 2 has hit testing");
 
     }
 

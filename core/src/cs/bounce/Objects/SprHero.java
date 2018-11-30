@@ -58,7 +58,8 @@ public class SprHero extends Sprite {
     }
 
     public void setPos(Vector2 v) {
-        v2Pos.equals(v);
+        v2Pos.x = v.x;
+        v2Pos.y = v.y;
     }
 
     public void setPos(float x, float y) {

@@ -13,14 +13,22 @@ import cs.bounce.Objects.*;
 
 
 public class ScrLvl1 implements Screen, InputProcessor {
+
+    Vector2 v2HeroStart;
+
     GamMain main;
     SpriteBatch batch;
     Texture txJumper;
     Texture txBackground;
     SprHero sphHero;
+
     ObjPlatform obFloor;
     ObjPlatform objPlatform;
     ObjPlatform objPlatform2;
+
+    ObjFixedHazard ofhHazard;
+
+    ObjObjective objObjective;
     SprBackground bgBackground;
 
     OrthographicCamera oc = new OrthographicCamera();
@@ -37,10 +45,17 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
-        sphHero = new SprHero(txJumper, 250, 250);
+        v2HeroStart = new Vector2(500,100);
+        sphHero = new SprHero(txJumper, v2HeroStart.x, v2HeroStart.y);
+
         obFloor = new ObjPlatform("fl_ground.png", 0, 0, 700, 100);
         objPlatform = new ObjPlatform("fl_ground.png", 100, 100, 100, 100);
         objPlatform2 = new ObjPlatform("fl_ground.png", 360, 270, 200, 50);
+
+        ofhHazard = new ObjFixedHazard("spikes.png", 200,100,100,50);
+
+        objObjective = new ObjObjective("Bread.png", 400,315,80,50);
+
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
@@ -63,6 +78,10 @@ public class ScrLvl1 implements Screen, InputProcessor {
         obFloor.draw(batch);
         objPlatform.draw(batch);
         objPlatform2.draw(batch);
+
+        ofhHazard.draw(batch);
+
+        objObjective.draw(batch);
         sphHero.draw(batch);
         batch.end();
 
@@ -76,6 +95,17 @@ public class ScrLvl1 implements Screen, InputProcessor {
             sphHero.applyForce(v2Gravity);
         }
 
+        if (ofhHazard.isHit(sphHero)) {
+            main.updateScreen(2);
+            sphHero.setPos(v2HeroStart);
+            System.out.println("Y'all shoulda died hun");
+        }
+
+        if (objObjective.isHit(sphHero)) {
+            System.out.println("You won");
+            sphHero.setPos(v2HeroStart);
+            main.updateScreen(1);
+        }
 
         sphHero.update();
 
