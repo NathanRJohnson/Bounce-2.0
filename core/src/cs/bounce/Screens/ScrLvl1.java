@@ -18,13 +18,11 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Texture txJumper;
     Texture txBackground;
     SprHero sphHero;
-    ObjPlatform obFloor;
-    ObjPlatform objPlatform;
-    ObjPlatform objPlatform2;
     SprBackground bgBackground;
 
     OrthographicCamera oc = new OrthographicCamera();
 
+    ObjPlatform oplFloor, oplLeftWall, oplRightWall;
 
     Boolean isAPressed;
     Boolean isDPressed;
@@ -40,15 +38,17 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 0, 200);
-        obFloor = new ObjPlatform("fl_ground.png", -700, 0, 1400, 100);
-        objPlatform = new ObjPlatform("fl_ground.png", 100, 100, 100, 100);
-        objPlatform2 = new ObjPlatform("fl_ground.png", 360, 270, 200, 50);
+
+        oplFloor = new ObjPlatform("fl_ground.png", -400,-350,1800,400);
+        oplLeftWall = new ObjPlatform("fl_ground.png", -750,-350,400,1350);
+        oplRightWall = new ObjPlatform("fl_ground.png",1350,-350,400,1350);
+
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
         v2Gravity = new Vector2(0, -1);
-        float camX = sphHero.getX();
-        float camY = sphHero.getY();
+        camX = sphHero.getX();
+        camY = sphHero.getY();
         Gdx.input.setInputProcessor(this);
     }
 
@@ -65,24 +65,25 @@ public class ScrLvl1 implements Screen, InputProcessor {
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
-        obFloor.draw(batch);
-        objPlatform.draw(batch);
-        objPlatform2.draw(batch);
         sphHero.draw(batch);
+
+        oplFloor.draw(batch);
+        oplLeftWall.draw(batch);
+        oplRightWall.draw(batch);
+
         batch.end();
 
+        oplFloor.isHit(sphHero);
+        oplLeftWall.isHit(sphHero);
+        oplRightWall.isHit(sphHero);
 
-        obFloor.isHit(sphHero);
-        objPlatform.isHit(sphHero);
-        objPlatform2.isHit(sphHero);
-
-        if (!obFloor.checkHit(sphHero) && !objPlatform.checkHit(sphHero) && !objPlatform2.checkHit(sphHero)) {
+            if (!oplFloor.checkHit(sphHero) && !oplLeftWall.checkHit(sphHero) && !oplRightWall.checkHit(sphHero)) {
             sphHero.setCanJump(false);
             sphHero.applyForce(v2Gravity);
-        }
+          }
 
 
-        sphHero.update();
+       sphHero.update();
 
 
         if (!isAPressed && !isDPressed)
@@ -98,20 +99,16 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oc.position.set(camX, camY + 300, 0);
         if (sphHero.getX() > camX + 75) {
             camX += 5;
-            System.out.println("Slide to the Right");
         }
         if (sphHero.getX() < camX - 125) {
             camX -= 5;
-            System.out.println("Slide to the Left");
         }
         if (sphHero.getY() > camY + 350) {
             camY += 10;
-            System.out.println("Go up");
         }
         if (sphHero.getY() > -300) {
             if (sphHero.getY() < camY + 100) {
                 camY -= 20;
-                System.out.println("Go down");
             }
         }
     }
@@ -140,7 +137,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void dispose() {
         sphHero.getTexture().dispose();
         bgBackground.getTexture().dispose();
-        obFloor.getTexture().dispose();
+        oplFloor.getTexture().dispose();
     }
 
     @Override
