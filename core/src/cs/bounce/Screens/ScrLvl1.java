@@ -24,8 +24,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     OrthographicCamera oc = new OrthographicCamera();
 
-    ObjPlatform oplFloor, oplLeftWall, oplRightWall;
-
     Boolean isAPressed;
     Boolean isDPressed;
 
@@ -34,8 +32,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
     float camY;
 
     //Array List
-    int n = 3;
-    ArrayList<ObjPlatform> arplat = new ArrayList<ObjPlatform>(n);
+    int nPlatformCount = 4;
+    ArrayList<ObjPlatform> arplat = new ArrayList<ObjPlatform>(nPlatformCount);
 
 
     public ScrLvl1(GamMain _main) {
@@ -44,20 +42,19 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oc.setToOrtho(false, 1000, 800);
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
-        sphHero = new SprHero(txJumper, 0, 200);
+        sphHero = new SprHero(txJumper, 0, 0);
 
-        oplFloor = new ObjPlatform("fl_ground.png", -400, -350, 1800, 400);
-        oplLeftWall = new ObjPlatform("fl_ground.png", -750, -350, 400, 1350);
-        oplRightWall = new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350);
 
         arplat.add(new ObjPlatform("fl_ground.png", -400, -350, 1800, 400));
         arplat.add(new ObjPlatform("fl_ground.png", -750, -350, 400, 1350));
         arplat.add(new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350));
+        arplat.add(new ObjPlatform("fl_ground.png", 100,  100, 200, 50));
+
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
-        v2Gravity = new Vector2(0, -1);
+        v2Gravity = new Vector2(0, (float) -1/nPlatformCount);
         camX = sphHero.getX();
         camY = sphHero.getY();
         Gdx.input.setInputProcessor(this);
@@ -73,41 +70,30 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
         oc.update();
         TrackingCamera();
+
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         sphHero.draw(batch);
-
-       // oplFloor.draw(batch);
-      //  oplLeftWall.draw(batch);
-      //  oplRightWall.draw(batch);
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < nPlatformCount; i++) {
             arplat.get(i).draw(batch);
         }
-
         batch.end();
 
-        for (int i = 0; i < n; i++) {
-            arplat.get(i).isHit(sphHero);
 
-            if (!arplat.get(i).checkHit(sphHero)) { // is this saying AND or OR?
+        for (ObjPlatform p : arplat) {
+            p.isHit(sphHero);
+        }
+
+        for (ObjPlatform p : arplat) {
+            if (p.checkHit(sphHero)) {
+                break;
+            } else {
                 sphHero.setCanJump(false);
                 sphHero.applyForce(v2Gravity);
             }
 
         }
-
-    /*     oplFloor.isHit(sphHero);
-         oplLeftWall.isHit(sphHero);
-         oplRightWall.isHit(sphHero);
-
-            if (!oplFloor.checkHit(sphHero) && !oplLeftWall.checkHit(sphHero) && !oplRightWall.checkHit(sphHero)) {
-            sphHero.setCanJump(false);
-            sphHero.applyForce(v2Gravity);
-          }
-          */
-
 
         sphHero.update();
 
@@ -163,7 +149,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void dispose() {
         sphHero.getTexture().dispose();
         bgBackground.getTexture().dispose();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < nPlatformCount; i++) {
             arplat.get(i).getTexture().dispose();
         }
     }
