@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.*;
+
 
 
 public class ScrLvl1 implements Screen, InputProcessor {
@@ -34,7 +36,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public ScrLvl1(GamMain _main) {
         main = _main;
         batch = new SpriteBatch();
-        oc.setToOrtho(false, 1000, 800);
+        oc.setToOrtho(false,1000, 800);
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 0, 200);
@@ -78,6 +80,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oplRightWall.isHit(sphHero);
 
             if (!oplFloor.checkHit(sphHero) && !oplLeftWall.checkHit(sphHero) && !oplRightWall.checkHit(sphHero)) {
+                System.out.println("falling");
             sphHero.setCanJump(false);
             sphHero.applyForce(v2Gravity);
           }
@@ -88,6 +91,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
         if (!isAPressed && !isDPressed)
             sphHero.setVel(0, sphHero.getVel().y);
+
 
         if (sphHero.getPos().y >= sphHero.getMaxheight()) { //sets can jump false when Hero reaches maximum jump height
             sphHero.setCanJump(false);
@@ -116,6 +120,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
 
+      //  oc.viewportWidth = width;
+      //  oc.viewportHeight = height;
     }
 
     @Override
