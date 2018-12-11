@@ -45,10 +45,11 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero = new SprHero(txJumper, 0, 0);
 
 
-        arplat.add(new ObjPlatform("fl_ground.png", -400, -350, 1800, 400));
+        arplat.add(new ObjPlatform("fl_ground.png", -400, -350, 1800, 400)); //ground
+        arplat.add(new ObjPlatform("fl_ground.png", 100,  100, 200, 50)); //pt1
         arplat.add(new ObjPlatform("fl_ground.png", -750, -350, 400, 1350));
         arplat.add(new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350));
-        arplat.add(new ObjPlatform("fl_ground.png", 100,  100, 200, 50));
+
 
 
         bgBackground = new SprBackground(txBackground);
