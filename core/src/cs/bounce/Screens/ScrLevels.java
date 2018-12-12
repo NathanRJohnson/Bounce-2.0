@@ -57,7 +57,7 @@ public class ScrLevels implements Screen {
         changeScreen();
         sprbgLevels.draw(batch);
         btnLvl1.draw(batch);
-        btnLvl2.draw(batch);
+       // btnLvl2.draw(batch);
         btnBack.draw(batch);
         batch.end();
 
@@ -65,8 +65,8 @@ public class ScrLevels implements Screen {
         shapeRenderer.setProjectionMatrix(oc.combined);
         shapeRenderer.setColor(Color.BLUE);
         shapeRenderer.polygon(btnLvl1.getPlyButton().getTransformedVertices());
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.polygon(btnLvl2.getPlyButton().getTransformedVertices());
+      //  shapeRenderer.setColor(Color.RED);
+       // shapeRenderer.polygon(btnLvl2.getPlyButton().getTransformedVertices());
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.polygon(btnBack.getPlyButton().getTransformedVertices());
         shapeRenderer.end();
