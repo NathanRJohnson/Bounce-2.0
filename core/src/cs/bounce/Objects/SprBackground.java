@@ -9,6 +9,6 @@ public class SprBackground extends Sprite {
         super(tx);
         int nWidth = 4000, nHeight = 2000;
         setSize(nWidth, nHeight);
-        setPosition(-2000, -500);
+        setPosition(-2500, -500);
     }
 }

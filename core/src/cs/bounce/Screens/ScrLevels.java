@@ -27,18 +27,18 @@ public class ScrLevels implements Screen {
 
     public ScrLevels(GamMain main) {
             this.main = main;
-           // Gdx.input.setInputProcessor(this);
+            // Gdx.input.setInputProcessor(this);
         //OC Camera
-        oc.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        oc.setToOrtho(false,1000, 800);
         //Texture
         txbgLevels = new Texture("bg_level_select.jpg");
         batch = new SpriteBatch();
         //SprBackground
         sprbgLevels = new SprBackground(txbgLevels);
         //Buttons
-        btnBack = new SprButton(0,380,100, 100,"back.png");
-        btnLvl1 = new SprButton(50,250,100, 100,"lvl1_select.png");
-        btnLvl2 = new SprButton(200,250,100, 100,"lvl2_select.png");
+        btnBack = new SprButton(0,700,100, 100,"back.png");
+        btnLvl1 = new SprButton(100,400,100, 100,"lvl1_select.png");
+        btnLvl2 = new SprButton(250,400,100, 100,"lvl2_select.png");
         //Mouse
         vMouse = new Vector2(0,0);
         //ShapeRenderer

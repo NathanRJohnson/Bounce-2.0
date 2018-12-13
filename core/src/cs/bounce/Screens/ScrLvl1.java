@@ -119,7 +119,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-
       //  oc.viewportWidth = width;
       //  oc.viewportHeight = height;
     }

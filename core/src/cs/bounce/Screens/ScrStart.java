@@ -37,7 +37,7 @@ public class ScrStart implements Screen, InputProcessor {
         bgStart = new SprBackground(txStart);
 
         //Buttons
-        btnStart = new SprButton(200,200,200, 200,"start_button.png");
+        btnStart = new SprButton(350,200,250, 250,"start_button.png");
 
         //Mouse
         vMouse = new Vector2(0,0);
