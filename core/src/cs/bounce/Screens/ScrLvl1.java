@@ -83,7 +83,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
 
         for (ObjPlatform p : arplat) {
-            p.isHit(sphHero);
+            sphHero.RegisterHit(p);
         }
 
         for (ObjPlatform p : arplat) {
