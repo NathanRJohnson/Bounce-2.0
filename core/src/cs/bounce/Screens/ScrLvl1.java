@@ -24,7 +24,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     OrthographicCamera oc = new OrthographicCamera();
 
-    ObjPlatform oplFloor, oplLeftWall, oplRightWall;
+    ObjPlatform oplFloor, oplLeftWall, oplRightWall, oplPlat1, oplPlat2, oplPlat3;
 
     Boolean isAPressed;
     Boolean isDPressed;
@@ -44,6 +44,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oplFloor = new ObjPlatform("fl_ground.png", -400,-350,1800,400);
         oplLeftWall = new ObjPlatform("fl_ground.png", -750,-350,400,1350);
         oplRightWall = new ObjPlatform("fl_ground.png",1350,-350,400,1350);
+        oplPlat1 = new ObjPlatform("fl_ground.png",-350,285,550,50);
+        oplPlat2 = new ObjPlatform("fl_ground.png",350,285,500,50);
+        oplPlat3 = new ObjPlatform("fl_ground.png",850,50,500,135);
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
@@ -72,14 +75,20 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oplFloor.draw(batch);
         oplLeftWall.draw(batch);
         oplRightWall.draw(batch);
+        oplPlat1.draw(batch);
+        oplPlat2.draw(batch);
+        oplPlat3.draw(batch);
 
         batch.end();
 
         oplFloor.isHit(sphHero);
         oplLeftWall.isHit(sphHero);
         oplRightWall.isHit(sphHero);
+        oplPlat1.isHit(sphHero);
+        oplPlat2.isHit(sphHero);
+        oplPlat3.isHit(sphHero);
 
-            if (!oplFloor.checkHit(sphHero) && !oplLeftWall.checkHit(sphHero) && !oplRightWall.checkHit(sphHero)) {
+            if (!oplFloor.checkHit(sphHero) && !oplLeftWall.checkHit(sphHero) && !oplRightWall.checkHit(sphHero) && !oplPlat1.checkHit(sphHero) && !oplPlat2.checkHit(sphHero) && !oplPlat3.checkHit(sphHero)) {
                 System.out.println("falling");
             sphHero.setCanJump(false);
             sphHero.applyForce(v2Gravity);
