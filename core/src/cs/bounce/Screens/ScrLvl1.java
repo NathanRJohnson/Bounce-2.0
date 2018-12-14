@@ -70,9 +70,13 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero.draw(batch);
         batch.end();
 
-        obFloor.isHit(sphHero);
-        objPlatform.isHit(sphHero);
-        objPlatform2.isHit(sphHero);
+      //  obFloor.isHit(sphHero);
+      //  objPlatform.isHit(sphHero);
+     //   objPlatform2.isHit(sphHero);
+
+        sphHero.RegisterHit(obFloor);
+        sphHero.RegisterHit(objPlatform);
+        sphHero.RegisterHit(objPlatform2);
 
         if (!obFloor.checkHit(sphHero) && !objPlatform.checkHit(sphHero) && !objPlatform2.checkHit(sphHero)) {
             sphHero.setCanJump(false);
