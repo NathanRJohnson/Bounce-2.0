@@ -7,8 +7,8 @@ public class SprBackground extends Sprite {
 
     public SprBackground(Texture tx) {
         super(tx);
-        int nWidth = 4000, nHeight = 2000;
+        int nWidth = 3000, nHeight = 1500;
         setSize(nWidth, nHeight);
-        setPosition(-2500, -500);
+        setPosition(-1500, -350);
     }
 }

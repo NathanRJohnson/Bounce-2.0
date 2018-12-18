@@ -25,11 +25,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
     OrthographicCamera oc = new OrthographicCamera();
 
     ObjPlatform oplFloor, oplLeftWall, oplRightWall, oplPlat1, oplPlat2, oplPlat3;
+    ObjObjective objFinish;
 
     Boolean isAPressed;
     Boolean isDPressed;
 
-    Vector2 v2Gravity;
+    Vector2 v2Gravity, v2HeroStart;
     float camX;
     float camY;
 
@@ -37,21 +38,24 @@ public class ScrLvl1 implements Screen, InputProcessor {
         main = _main;
         batch = new SpriteBatch();
         oc.setToOrtho(false,1000, 800);
-        txJumper = new Texture("hero_yeetgirl.png");
-        txBackground = new Texture("bg_city.png");
-        sphHero = new SprHero(txJumper, 0, 200);
+        txJumper = new Texture("dinner_sprite.png");
+        txBackground = new Texture("barn.png");
+        v2HeroStart = new Vector2(0,200);
+        sphHero = new SprHero(txJumper, v2HeroStart.x,v2HeroStart.y);
 
-        oplFloor = new ObjPlatform("fl_ground.png", -400,-350,1800,400);
-        oplLeftWall = new ObjPlatform("fl_ground.png", -750,-350,400,1350);
-        oplRightWall = new ObjPlatform("fl_ground.png",1350,-350,400,1350);
-        oplPlat1 = new ObjPlatform("fl_ground.png",-350,285,550,50);
-        oplPlat2 = new ObjPlatform("fl_ground.png",350,285,500,50);
-        oplPlat3 = new ObjPlatform("fl_ground.png",850,50,500,135);
+        oplFloor = new ObjPlatform("dirt_floor.jpg", -400,-350,1800,400);
+        oplLeftWall = new ObjPlatform("barn_wall.png", -750,-350,400,1350);
+        oplRightWall = new ObjPlatform("barn_wall.png",1350,-350,400,1350);
+        oplPlat1 = new ObjPlatform("hay_plat_small.jpg",-350,285,550,50);
+        oplPlat2 = new ObjPlatform("hay_plat_small.jpg",350,285,500,50);
+        oplPlat3 = new ObjPlatform("hay_plat.jpg",850,50,500,135);
 
+        objFinish = new ObjObjective("seeds.png",-350,335,100,100);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
         isDPressed = false;
         v2Gravity = new Vector2(0, -1);
+
         camX = sphHero.getX();
         camY = sphHero.getY();
         Gdx.input.setInputProcessor(this);
@@ -73,11 +77,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sphHero.draw(batch);
 
         oplFloor.draw(batch);
-        oplLeftWall.draw(batch);
-        oplRightWall.draw(batch);
         oplPlat1.draw(batch);
         oplPlat2.draw(batch);
         oplPlat3.draw(batch);
+        objFinish.draw(batch);
+        oplLeftWall.draw(batch);
+        oplRightWall.draw(batch);
 
         batch.end();
 
@@ -87,6 +92,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oplPlat1.isHit(sphHero);
         oplPlat2.isHit(sphHero);
         oplPlat3.isHit(sphHero);
+
+        if (objFinish.isHit(sphHero)) {
+            System.out.println("You won");
+            sphHero.setPos(v2HeroStart);
+            main.updateScreen(1);
+        }
 
             if (!oplFloor.checkHit(sphHero) && !oplLeftWall.checkHit(sphHero) && !oplRightWall.checkHit(sphHero) && !oplPlat1.checkHit(sphHero) && !oplPlat2.checkHit(sphHero) && !oplPlat3.checkHit(sphHero)) {
                 System.out.println("falling");
