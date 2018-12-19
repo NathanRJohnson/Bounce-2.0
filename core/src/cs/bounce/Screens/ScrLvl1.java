@@ -32,9 +32,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
     float camY;
 
     //Array List
-    int nPlatformCount = 5, iPlat;
+    int nObstacleCount = 5, iPlat;
     boolean hasHit;
-    ArrayList<ObjPlatform> Arplat = new ArrayList<ObjPlatform>(nPlatformCount);
+    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(nObstacleCount);
 
 
     public ScrLvl1(GamMain _main) {
@@ -45,12 +45,12 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txBackground = new Texture("bg_city.png");
         sphHero = new SprHero(txJumper, 0, 0);
 
-
-        Arplat.add(new ObjPlatform("fl_ground.png", -400, -350, 1800, 400)); //ground
-        Arplat.add(new ObjPlatform("fl_ground.png", 100, 100, 200, 80)); //pt1
-        Arplat.add(new ObjPlatform("fl_ground.png", 400, 200, 200, 80)); //pt2
-        Arplat.add(new ObjPlatform("fl_ground.png", -750, -350, 400, 1350));
-        Arplat.add(new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350));
+        //Platforms
+        ArObs.add(new ObjPlatform("fl_ground.png", -400, -350, 1800, 400)); //ground
+        ArObs.add(new ObjPlatform("fl_ground.png", 100, 100, 200, 80)); //pt1
+        ArObs.add(new ObjPlatform("fl_ground.png", 400, 200, 200, 80)); //pt2
+        ArObs.add(new ObjPlatform("fl_ground.png", -750, -350, 400, 1350));
+        ArObs.add(new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350));
 
 
         bgBackground = new SprBackground(txBackground);
@@ -77,18 +77,18 @@ public class ScrLvl1 implements Screen, InputProcessor {
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         sphHero.draw(batch);
-        for (int i = 0; i < nPlatformCount; i++) {
-            Arplat.get(i).draw(batch);
+        for (int i = 0; i < nObstacleCount; i++) {
+            ArObs.get(i).draw(batch);
         }
         batch.end();
 
 //  ------------------------------------------------
 
-        for (iPlat = 0; iPlat < Arplat.size(); iPlat++) {
-            if (Arplat.get(iPlat).isHit(sphHero)) {
-                sphHero.registerHit(Arplat.get(iPlat));
-                hasHit = true;
-            }
+        for (iPlat = 0; iPlat < ArObs.size(); iPlat++) {
+      //      if (ArObs.get(iPlat).getClass.isHit(sphHero)) {
+      //          sphHero.registerHit(ArObs.get(iPlat));
+      //          hasHit = true;
+      //      }
         }
         if (!hasHit) {
             sphHero.applyForce(v2Gravity);
@@ -151,8 +151,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void dispose() {
         sphHero.getTexture().dispose();
         bgBackground.getTexture().dispose();
-        for (int i = 0; i < Arplat.size(); i++) {
-            Arplat.get(i).getTexture().dispose();
+        for (int i = 0; i < ArObs.size(); i++) {
+            ArObs.get(i).getTexture().dispose();
         }
     }
 
