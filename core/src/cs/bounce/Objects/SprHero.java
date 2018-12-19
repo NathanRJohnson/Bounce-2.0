@@ -40,32 +40,33 @@ public class SprHero extends Sprite {
 
     }
 
-    public void RegisterHit(ObjPlatform p){
+    public void RegisterHit(ObjPlatform p) {
         int n = p.sideCheck(plyHero);
 
-            if (!canJump && n == 1) {
-                    if (p.getTopRight().y != 0){
-                        setPos(v2Pos.x, p.getTopRight().y - 15);
-                        setMaxHeight();
-            } else{
-                        setPos(v2Pos.x, fH - 15);
-                    }
-                        setVel(v2Vel.x,0);
-                        canJump = true;
+        if (!canJump && n == 1) {
+            if (p.getTopRight().y != 0) {
+                setPos(v2Pos.x, p.getTopRight().y - 15);
+                setMaxHeight();
+            } else {
+                setPos(v2Pos.x, fH - 15);
+            }
+            setVel(v2Vel.x, 0);
+            canJump = true;
         }
         if (n == 2) {
             canJump = false;
             if (v2Vel.y > 0) {
-                setVel(v2Vel.x, v2Vel.y * (-1/2) );
+                setVel(v2Vel.x, v2Vel.y * -1);
+                setVel(v2Vel.x,  v2Vel.y / 2);
             }
         }
-        if (n == 3){
+        if (n == 3) {
             v2Vel.x = 0;
-            setPos(v2Pos.x + 1,v2Pos.y);
+            setPos(v2Pos.x + 1, v2Pos.y);
         }
         if (n == 4) {
             v2Vel.x = 0;
-            setPos(v2Pos.x - 1,v2Pos.y);
+            setPos(v2Pos.x - 1, v2Pos.y);
         }
     }
 
