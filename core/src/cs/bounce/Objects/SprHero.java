@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class SprHero extends Sprite {
     private Vector2 v2Pos, v2Vel, v2Acc;
     private float fX, fY;
-    private int fW = 100, fH = 100;
+    private int fW = 100, fH = 100, nHitState;
     private float fMaxHeight;
     private boolean canJump = false;
     private Polygon plyHero;
@@ -40,7 +40,7 @@ public class SprHero extends Sprite {
 
     }
 
-    public void RegisterHit(ObjPlatform p){
+    public void registerHit(ObjPlatform p){
         int n = p.sideCheck(plyHero);
 
         if (!canJump && n == 1) {
@@ -135,24 +135,8 @@ public class SprHero extends Sprite {
         return plyHero;
     }
 
-    public Vector2 getBotLeft() {
-        Vector2 v = new Vector2(fX, fY);
-        return v;
-    }
-
-    public Vector2 getBotRight() {
-        Vector2 v = new Vector2(fX + 100, fY);
-        return v;
-    }
-
-    public Vector2 getTopRight() {
-        Vector2 v = new Vector2(fX + 100, fY + 100);
-        return v;
-    }
-
-    public Vector2 getTopLeft() {
-        Vector2 v = new Vector2(fX, fY + 100);
-        return v;
+    public void setHitState(int n){
+        nHitState = n;
     }
 
 }

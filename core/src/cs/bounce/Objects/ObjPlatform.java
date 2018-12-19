@@ -31,8 +31,8 @@ public class ObjPlatform extends SprObstacle {
     }
 
 
-    public boolean checkHit(SprHero sHero) {
-        //isHitting = Intersector.overlapConvexPolygons(sHero.getPolygon(), plyObstacle);
+    public boolean isHit(SprHero sHero) {
+
         isTopHitting = Intersector.intersectSegmentPolygon(getTopRight(), getTopLeft(), sHero.getPolygon());
         isBotHitting = Intersector.intersectSegmentPolygon(getBotRight(), getBotLeft(), sHero.getPolygon());
         isLeftHitting = Intersector.intersectSegmentPolygon(getTopLeft(), getBotLeft(), sHero.getPolygon());
