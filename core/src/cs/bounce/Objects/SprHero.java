@@ -56,7 +56,7 @@ public class SprHero extends Sprite {
         if (n == 2) {
             canJump = false;
             if (v2Vel.y > 0) {
-                setVel(v2Vel.x, v2Vel.y * (-1/2) );
+                setVel(v2Vel.x, v2Vel.y / -2);
             }
         }
         if (n == 3){
