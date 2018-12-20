@@ -95,7 +95,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
         if (objFinish.isHit(sphHero)) {
             System.out.println("You won");
-            sphHero.setPos(v2HeroStart);
+            sphHero.setPos(v2HeroStart.x, v2HeroStart.y);
             main.updateScreen(1);
         }
 
