@@ -32,6 +32,7 @@ public class SprObstacle extends Sprite {
     return plyObstacle;
   }
 
+
   @Override
   public float getY() {
     return fY;

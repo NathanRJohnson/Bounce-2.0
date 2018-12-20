@@ -84,17 +84,18 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
 //  ------------------------------------------------
 
-        for (iPlat = 0; iPlat < ArObs.size(); iPlat++) {
-      //      if (ArObs.get(iPlat).getClass.isHit(sphHero)) {
-      //          sphHero.registerHit(ArObs.get(iPlat));
-      //          hasHit = true;
-      //      }
+     /*    for (int i = 0; i < ArObs.size(); i++) {
+           if (ArObs.get(iPlat).getClass().isHit(sphHero)) {
+                sphHero.registerHit(ArObs.get(iPlat));
+                hasHit = true;
+            }
         }
+
         if (!hasHit) {
             sphHero.applyForce(v2Gravity);
             sphHero.setCanJump(false);
         }
-        hasHit = false;
+        hasHit = false;*/
 
 //  ------------------------------------------------
         sphHero.update();
