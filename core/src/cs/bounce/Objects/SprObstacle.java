@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 public class SprObstacle extends Sprite {
   public float fX, fY, fW, fH;
   public Polygon plyObstacle;
+  int nType;
+  //public int nType;
 
   public SprObstacle(String sFile, float _fX, float _fY, float _fW, float _fH) {
     super(new Texture(Gdx.files.internal(sFile)));
@@ -30,6 +32,22 @@ public class SprObstacle extends Sprite {
 
   public Polygon getPolygon() {
     return plyObstacle;
+  }
+
+  public void hit(SprHero s, Object o){
+    if (getType() == 0){ //Objective
+
+    }
+    if (getType() == 1){ //Hazard
+
+    }
+    if (getType() == 2){ // platform
+      s.registerHit(o);
+    }
+  }
+
+  public int getType(){
+    return nType;
   }
 
 

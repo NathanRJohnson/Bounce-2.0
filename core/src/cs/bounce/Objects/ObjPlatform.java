@@ -10,7 +10,7 @@ public class ObjPlatform extends SprObstacle {
 
     public ObjPlatform(String sFile, float fX, float fY, float fW, float fH) {
         super(sFile, fX, fY, fW, fH);
-
+        nType = 2;
     }
 
     public int sideCheck(Polygon p) {
