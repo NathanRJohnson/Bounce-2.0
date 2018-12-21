@@ -51,7 +51,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ArObs.add(new ObjPlatform("fl_ground.png", 400, 200, 200, 80)); //pt2
         ArObs.add(new ObjPlatform("fl_ground.png", -750, -350, 400, 1350));
         ArObs.add(new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350));
-
+        ArObs.add(new ObjFixedHazard("spikes.png", 600, 100, 300, 50));
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
@@ -84,9 +84,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
 //  ------------------------------------------------
 
-     /*    for (int i = 0; i < ArObs.size(); i++) {
-           if (ArObs.get(iPlat).getClass().isHit(sphHero)) {
-                sphHero.registerHit(ArObs.get(iPlat));
+     for (int i = 0; i < ArObs.size(); i++) {
+           if (ArObs.get(i).isHit(sphHero, ArObs.get(i))) {
+                sphHero.registerHit(ArObs.get(i));
                 hasHit = true;
             }
         }
@@ -95,7 +95,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
             sphHero.applyForce(v2Gravity);
             sphHero.setCanJump(false);
         }
-        hasHit = false;*/
+        hasHit = false;
 
 //  ------------------------------------------------
         sphHero.update();

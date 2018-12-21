@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import cs.bounce.Menu.GamMain;
+import cs.bounce.Screens.ScrLevels;
 
 public class SprHero extends Sprite {
-    private Vector2 v2Pos, v2Vel, v2Acc;
+    private Vector2 v2Pos, v2Vel, v2Acc, v2Start;
     private float fX, fY;
     private int fW = 100, fH = 100, nHitState;
     private float fMaxHeight;
@@ -40,7 +42,29 @@ public class SprHero extends Sprite {
 
     }
 
-    public void registerHit(ObjPlatform p){
+    public void getHitType(int nHitType, SprObstacle o) {
+        switch (nHitType) {
+            case 0:
+
+            case 1: die(o);
+
+            case 2: registerHit(o);
+        }
+
+    }
+
+    public void die(SprObstacle o) {
+        ObjFixedHazard h = new ObjFixedHazard(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
+        setPos(v2Start);
+    }
+
+    public void win(SprObstacle o){
+        ObjObjective w = new ObjObjective(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
+        // need to change the screen
+    }
+
+    public void registerHit(SprObstacle o){
+        ObjPlatform p = new ObjPlatform(o.getFile() ,o.getX(), o.getY(), o.getWidth(), o.getHeight());
         int n = p.sideCheck(plyHero);
 
         if (!canJump && n == 1) {
@@ -88,7 +112,8 @@ public class SprHero extends Sprite {
     }
 
     public void setPos(Vector2 v) {
-        v2Pos.equals(v);
+        v2Pos.x = v.x;
+        v2Pos.y = v.y;
     }
 
     public void setPos(float x, float y) {

@@ -3,6 +3,7 @@ package cs.bounce.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,10 +11,12 @@ public class SprObstacle extends Sprite {
   public float fX, fY, fW, fH;
   public Polygon plyObstacle;
   int nType;
+  String sFile;
   //public int nType;
 
-  public SprObstacle(String sFile, float _fX, float _fY, float _fW, float _fH) {
-    super(new Texture(Gdx.files.internal(sFile)));
+  public SprObstacle(String _sFile, float _fX, float _fY, float _fW, float _fH) {
+    super(new Texture(Gdx.files.internal(_sFile)));
+    sFile = _sFile;
     fX = _fX;
     fY = _fY;
     setOrigin(fX, fY);
@@ -29,21 +32,20 @@ public class SprObstacle extends Sprite {
             //fX, fY + fH, fX + fW, fY + fH, fX + fW, fY, fX, fY
     });
   }
+  public String getFile(){
+    return sFile;
+  }
 
   public Polygon getPolygon() {
     return plyObstacle;
   }
 
-  public void hit(SprHero s, Object o){
-    if (getType() == 0){ //Objective
-
+  public boolean isHit(SprHero s, SprObstacle o){
+    if (Intersector.overlapConvexPolygons(s.getPolygon(), o.getPolygon())) {
+      s.getHitType(getType(), o);
+      return true;
     }
-    if (getType() == 1){ //Hazard
-
-    }
-    if (getType() == 2){ // platform
-      s.registerHit(o);
-    }
+    return false;
   }
 
   public int getType(){
