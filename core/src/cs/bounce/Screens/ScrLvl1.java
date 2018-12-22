@@ -27,7 +27,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Boolean isAPressed;
     Boolean isDPressed;
 
-    Vector2 v2Gravity;
+    Vector2 v2Gravity, v2StartingPos, v2CameraPos;
     float camX;
     float camY;
 
@@ -43,7 +43,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         oc.setToOrtho(false, 1000, 800);
         txJumper = new Texture("hero_yeetgirl.png");
         txBackground = new Texture("bg_city.png");
-        sphHero = new SprHero(txJumper, 0, 0);
+        v2StartingPos = new Vector2(0, 100);
+        sphHero = new SprHero(txJumper, v2StartingPos.x, v2StartingPos.y);
 
         //Platforms
         ArObs.add(new ObjPlatform("fl_ground.png", -400, -350, 1800, 400)); //ground
@@ -51,7 +52,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ArObs.add(new ObjPlatform("fl_ground.png", 400, 200, 200, 80)); //pt2
         ArObs.add(new ObjPlatform("fl_ground.png", -750, -350, 400, 1350));
         ArObs.add(new ObjPlatform("fl_ground.png", 1350, -350, 400, 1350));
-        ArObs.add(new ObjFixedHazard("spikes.png", 600, 100, 300, 50));
+        ArObs.add(new ObjFixedHazard("spikes.png", 600, 50, 200, 50));
+        ArObs.add(new ObjObjective("badlogic.jpg", 1100, 50, 50, 50));
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
@@ -59,6 +61,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         v2Gravity = new Vector2(0, -1);
         camX = sphHero.getX();
         camY = sphHero.getY();
+        v2CameraPos = new Vector2(camX, camY);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -77,18 +80,32 @@ public class ScrLvl1 implements Screen, InputProcessor {
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         sphHero.draw(batch);
-        for (int i = 0; i < nObstacleCount; i++) {
+        for (int i = 0; i < ArObs.size(); i++) {
             ArObs.get(i).draw(batch);
         }
         batch.end();
 
 //  ------------------------------------------------
 
-     for (int i = 0; i < ArObs.size(); i++) {
-           if (ArObs.get(i).isHit(sphHero, ArObs.get(i))) {
+        for (int i = 0; i < ArObs.size(); i++) {
+            if (ArObs.get(i).isHit(sphHero, ArObs.get(i))) {
                 sphHero.registerHit(ArObs.get(i));
                 hasHit = true;
+                //  System.out.println(ArObs.get(i).getType());
+                if (ArObs.get(i).getType() == 1) {
+                    sphHero.setPos(v2StartingPos);
+                    camX = sphHero.getPos().x;
+                    camY = sphHero.getPos().y;
+                    main.updateScreen(2);
+                }
+                if (ArObs.get(i).getType() == 0) {
+                    sphHero.setPos(v2StartingPos);
+                    camX = sphHero.getPos().x;
+                    camY = sphHero.getPos().y;
+                    main.updateScreen(1);
+                }
             }
+
         }
 
         if (!hasHit) {
@@ -226,5 +243,3 @@ public class ScrLvl1 implements Screen, InputProcessor {
         return false;
     }
 }
-
-

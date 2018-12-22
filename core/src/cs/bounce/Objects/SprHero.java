@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Menu.GamMain;
 import cs.bounce.Screens.ScrLevels;
+import cs.bounce.Screens.ScrLvl1;
 
 public class SprHero extends Sprite {
     private Vector2 v2Pos, v2Vel, v2Acc, v2Start;
@@ -45,36 +46,41 @@ public class SprHero extends Sprite {
     public void getHitType(int nHitType, SprObstacle o) {
         switch (nHitType) {
             case 0:
+                isWin(o);
 
-            case 1: die(o);
+            case 1:
+                isDie(o);
 
-            case 2: registerHit(o);
+            case 2:
+                registerHit(o);
         }
 
     }
 
-    public void die(SprObstacle o) {
+    public boolean isDie(SprObstacle o) {
         ObjFixedHazard h = new ObjFixedHazard(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
-        setPos(v2Start);
+        setPos(0, 0);
+        return true;
     }
 
-    public void win(SprObstacle o){
+    public boolean isWin(SprObstacle o) {
         ObjObjective w = new ObjObjective(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
-        // need to change the screen
+        setPos(0, 0);
+        return true;
     }
 
-    public void registerHit(SprObstacle o){
-        ObjPlatform p = new ObjPlatform(o.getFile() ,o.getX(), o.getY(), o.getWidth(), o.getHeight());
+    public void registerHit(SprObstacle o) {
+        ObjPlatform p = new ObjPlatform(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
         int n = p.sideCheck(plyHero);
 
         if (!canJump && n == 1) {
-            if (p.getTopRight().y != 0){
+            if (p.getTopRight().y != 0) {
                 setPos(v2Pos.x, p.getTopRight().y - 15);
                 setMaxHeight();
-            } else{
+            } else {
                 setPos(v2Pos.x, fH - 15);
             }
-            setVel(v2Vel.x,0);
+            setVel(v2Vel.x, 0);
             canJump = true;
         }
         if (n == 2) {
@@ -83,13 +89,13 @@ public class SprHero extends Sprite {
                 setVel(v2Vel.x, v2Vel.y / -2);
             }
         }
-        if (n == 3){
+        if (n == 3) {
             v2Vel.x = 0;
-            setPos(v2Pos.x + 1,v2Pos.y);
+            setPos(v2Pos.x + 1, v2Pos.y);
         }
         if (n == 4) {
             v2Vel.x = 0;
-            setPos(v2Pos.x - 1,v2Pos.y);
+            setPos(v2Pos.x - 1, v2Pos.y);
         }
     }
 
@@ -160,7 +166,7 @@ public class SprHero extends Sprite {
         return plyHero;
     }
 
-    public void setHitState(int n){
+    public void setHitState(int n) {
         nHitState = n;
     }
 
