@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class SprHero extends Sprite {
     private Vector2 v2Pos, v2Vel, v2Acc;
     private float fX, fY;
+    private int fW = 100, fH = 100;
     private float fMaxHeight;
     private boolean canJump = false;
     private Polygon plyHero;
@@ -37,6 +38,61 @@ public class SprHero extends Sprite {
         v2Vel.add(v2Acc);
         v2Acc.setZero();
 
+    }
+    public void getHitType(int nHitType, SprObstacle o) {
+        switch (nHitType) {
+            case 0:
+                isWin(o);
+
+            case 1:
+                isDie(o);
+
+            case 2:
+                registerHit(o);
+        }
+
+    }
+
+    public boolean isDie(SprObstacle o) {
+        ObjFixedHazard h = new ObjFixedHazard(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
+        setPos(0, 0);
+        return true;
+    }
+
+    public boolean isWin(SprObstacle o) {
+        ObjObjective w = new ObjObjective(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
+        setPos(0, 0);
+        return true;
+    }
+
+    public void registerHit(SprObstacle o) {
+        ObjPlatform p = new ObjPlatform(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
+        int n = p.sideCheck(plyHero);
+
+        if (!canJump && n == 1) {
+            if (p.getTopRight().y != 0) {
+                setPos(v2Pos.x, p.getTopRight().y - 15);
+                setMaxHeight();
+            } else {
+                setPos(v2Pos.x, fH - 15);
+            }
+            setVel(v2Vel.x, 0);
+            canJump = true;
+        }
+        if (n == 2) {
+            canJump = false;
+            if (v2Vel.y > 0) {
+                setVel(v2Vel.x, v2Vel.y / -2);
+            }
+        }
+        if (n == 3) {
+            v2Vel.x = 0;
+            setPos(v2Pos.x + 1, v2Pos.y);
+        }
+        if (n == 4) {
+            v2Vel.x = 0;
+            setPos(v2Pos.x - 1, v2Pos.y);
+        }
     }
 
     public void applyForce(Vector2 v) {
