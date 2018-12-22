@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.*;
 
@@ -21,31 +22,34 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Texture txBackground;
     SprHero sphHero;
     SprBackground bgBackground;
+
     OrthographicCamera oc = new OrthographicCamera();
+
     Boolean isAPressed;
     Boolean isDPressed;
-    Vector2 v2Gravity, v2HeroStart, v2StartingPos;
+
+    Vector2 v2Gravity, v2HeroStart;
     float camX;
     float camY;
     boolean hasHit;
-    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(6);
+    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(7);
 
     public ScrLvl1(GamMain _main) {
         main = _main;
         batch = new SpriteBatch();
-        oc.setToOrtho(false, 1000, 800);
+        oc.setToOrtho(false,1000, 800);
         txJumper = new Texture("dinner_sprite.png");
         txBackground = new Texture("barn.png");
-        v2HeroStart = new Vector2(0, 200);
-        sphHero = new SprHero(txJumper, v2HeroStart.x, v2HeroStart.y);
+        v2HeroStart = new Vector2(0,200);
+        sphHero = new SprHero(txJumper, v2HeroStart.x,v2HeroStart.y);
 
-        ArObs.add(new ObjPlatform("dirt_floor.jpg", -400, -350, 1800, 400)); //ground
-        ArObs.add(new ObjPlatform("barn_wall.png", -750, -350, 400, 1350)); //pt1
-        ArObs.add(new ObjPlatform("barn_wall.png", 1350, -350, 400, 1350)); //pt2
-        ArObs.add(new ObjPlatform("hay_plat_small.jpg", -350, 285, 550, 50));
-        ArObs.add(new ObjPlatform("hay_plat_small.jpg", 350, 285, 500, 50));
-        ArObs.add(new ObjPlatform("hay_plat.jpg", 850, 50, 500, 135));
-        ArObs.add(new ObjObjective("seeds.png", -350, 335, 100, 100));
+        ArObs.add(new ObjPlatform("dirt_floor.jpg", -400,-350,1800,400)); //ground
+        ArObs.add(new ObjPlatform("barn_wall.png", -750,-350,400,1350)); //pt1
+        ArObs.add(new ObjPlatform("barn_wall.png",1350,-350,400,1350)); //pt2
+        ArObs.add(new ObjPlatform("hay_plat_small.jpg",-350,285,550,50));
+        ArObs.add(new ObjPlatform("hay_plat_small.jpg",350,285,500,50));
+        ArObs.add(new ObjPlatform("hay_plat.jpg",850,50,500,135));
+        ArObs.add(new ObjObjective("seeds.png",-350,335,100,100));
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
@@ -54,18 +58,20 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
         camX = sphHero.getX();
         camY = sphHero.getY();
-        Gdx.input.setInputProcessor(this);
+
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta) {
+        // System.out.println(sphHero.getJumpState());
+
         oc.update();
         TrackingCamera();
-
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
@@ -74,19 +80,19 @@ public class ScrLvl1 implements Screen, InputProcessor {
             ArObs.get(i).draw(batch);
         }
         batch.end();
-
         for (int i = 0; i < ArObs.size(); i++) {
             if (ArObs.get(i).isHit(sphHero, ArObs.get(i))) {
                 sphHero.registerHit(ArObs.get(i));
                 hasHit = true;
+                //  System.out.println(ArObs.get(i).getType());
                 if (ArObs.get(i).getType() == 1) {
-                    sphHero.setPos(v2StartingPos);
+                    sphHero.setPos(v2HeroStart);
                     camX = sphHero.getPos().x;
                     camY = sphHero.getPos().y;
                     main.updateScreen(2);
                 }
                 if (ArObs.get(i).getType() == 0) {
-                    sphHero.setPos(v2StartingPos);
+                    sphHero.setPos(v2HeroStart);
                     camX = sphHero.getPos().x;
                     camY = sphHero.getPos().y;
                     main.updateScreen(1);
@@ -100,8 +106,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
             sphHero.setCanJump(false);
         }
         hasHit = false;
-
-        sphHero.update();
+       sphHero.update();
 
 
         if (!isAPressed && !isDPressed)
@@ -134,6 +139,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+      //  oc.viewportWidth = width;
+      //  oc.viewportHeight = height;
     }
 
     @Override
@@ -155,28 +162,30 @@ public class ScrLvl1 implements Screen, InputProcessor {
     public void dispose() {
         sphHero.getTexture().dispose();
         bgBackground.getTexture().dispose();
-        for (int i = 0; i < ArObs.size(); i++) {
+        for (int i = 0; i < ArObs.size(); i++){
             ArObs.get(i).getTexture().dispose();
         }
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        System.out.println("mm");
         switch (keycode) {
             case 29: //A
                 sphHero.setVel(-5, sphHero.getVel().y);
                 isAPressed = true;
+                System.out.println("a");
                 break;
             case 32: //D
                 sphHero.setVel(5, sphHero.getVel().y);
                 isDPressed = true;
+                System.out.println('d');
                 break;
             case 51: //W
                 if (sphHero.getJumpState()) {
                     sphHero.setMaxHeight();
                     sphHero.setVel(sphHero.getVel().x, 16);
-
-
+                    System.out.println("w");
                 }
                 break;
         }

@@ -1,80 +1,136 @@
 package cs.bounce.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Menu.GamMain;
+import cs.bounce.Objects.ObjPlatform;
+import cs.bounce.Objects.SprBackground;
+import cs.bounce.Objects.SprHero;
+import cs.bounce.Objects.SprObstacle;
+
+import java.util.ArrayList;
 
 
 public class ScrLvl2 implements Screen, InputProcessor {
 
-   /* GamMain main;
+    GamMain main;
     SpriteBatch batch;
-    //Textures
-    Texture txCity;
     Texture txJumper;
-    Texture txFloor;
-    //Backgrounds
-    SprBackground bgCity;
-    //Jumper
+    Texture txBackground;
     SprHero sphHero;
-    //Orthographic Camera
+    SprBackground bgBackground;
     OrthographicCamera oc = new OrthographicCamera();
-    //Obstalces
-    SprObstacle spoWall;
-    SprObstacle spoSpike;
-    //Floor
-    SprFloor flGround;
-    //Vectors
-    Vector2 v2Gravity, v2Normal; */
+    Boolean isAPressed;
+    Boolean isDPressed;
+    Vector2 v2Gravity, v2HeroStart, v2StartingPos;
+    float camX;
+    float camY;
+    boolean hasHit;
+    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(3);
 
     public ScrLvl2(GamMain _main) {
-    //    main = _main;
+        main = _main;
+        batch = new SpriteBatch();
+        oc.setToOrtho(false, 1000, 800);
+        txJumper = new Texture("dinner_sprite.png");
+        txBackground = new Texture("barn.png");
+        v2HeroStart = new Vector2(0, 200);
+        sphHero = new SprHero(txJumper, v2HeroStart.x, v2HeroStart.y);
+        bgBackground = new SprBackground(txBackground);
+        isAPressed = false;
+        isDPressed = false;
+        v2Gravity = new Vector2(0, -1);
+        camX = sphHero.getX();
+        camY = sphHero.getY();
+
+        ArObs.add(new ObjPlatform("dirt_floor.jpg", -400, -350, 1800, 400)); //ground
+        ArObs.add(new ObjPlatform("barn_wall.png", -750, -350, 400, 1350)); //wall 1
+        ArObs.add(new ObjPlatform("barn_wall.png", 1350, -350, 400, 1350)); //wall 2
+
+
     }
 
     @Override
     public void show() {
-   /*     oc.setToOrtho(false, 800, 400);
-        batch = new SpriteBatch();
-        //Textures
-        txCity = new Texture("bg_city.png");
-        txJumper = new Texture("hero_yeetgirl.png");
-        txFloor = new Texture("fl_ground.png");
-        //Backgrounds
-        bgCity = new SprBackground(txCity);
-        //Jumper
-        sphHero = new SprHero(txJumper, 200, 150);
-        //Floor
-        flGround = new SprFloor(txFloor);
-        //Obstacle
-        spoWall = new SprObstacle(100, 50, 100, 100, "wall.jpg");
-        spoSpike = new SprObstacle(400, 50, 100, 50, "spikes.png");
-        //Vector
-        v2Gravity = new Vector2(0, -1);
-        v2Normal = new Vector2(0, 1);
-*/
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta) {
-  /*      batch.begin();
-        bgCity.draw(batch);
-        flGround.draw(batch);
+        oc.update();
+        TrackingCamera();
+
+        batch.begin();
+        batch.setProjectionMatrix(oc.combined);
+        bgBackground.draw(batch);
         sphHero.draw(batch);
-        spoSpike.draw(batch);
-        spoWall.draw(batch);
+        for (int i = 0; i < ArObs.size(); i++){
+            ArObs.get(i).draw(batch);
+        }
         batch.end();
-        flGround.floor(sphHero);
+
+        for (int i = 0; i < ArObs.size(); i++) {
+            if (ArObs.get(i).isHit(sphHero, ArObs.get(i))) {
+                sphHero.registerHit(ArObs.get(i));
+                hasHit = true;
+                if (ArObs.get(i).getType() == 1) {
+                    sphHero.setPos(v2HeroStart);
+                    camX = sphHero.getPos().x;
+                    camY = sphHero.getPos().y;
+                    main.updateScreen(2);
+                }
+                if (ArObs.get(i).getType() == 0) {
+                    sphHero.setPos(v2HeroStart);
+                    camX = sphHero.getPos().x;
+                    camY = sphHero.getPos().y;
+                    main.updateScreen(1);
+                }
+            }
+
+        }
+
+        if (!hasHit) {
+            sphHero.applyForce(v2Gravity);
+            sphHero.setCanJump(false);
+        }
+        hasHit = false;
         sphHero.update();
-        spoWall.isHit(sphHero);
-        spoSpike.isKilled(sphHero);
-        */
+
+
+        if (!isAPressed && !isDPressed)
+            sphHero.setVel(0, sphHero.getVel().y);
+
+
+        if (sphHero.getPos().y >= sphHero.getMaxheight()) { //sets can jump false when Hero reaches maximum jump height
+            sphHero.setCanJump(false);
+        }
+
+
     }
 
-   /* if (isHit == true){
-
+    private void TrackingCamera() {
+        oc.position.set(camX, camY + 300, 0);
+        if (sphHero.getX() > camX + 75) {
+            camX += 5;
+        }
+        if (sphHero.getX() < camX - 125) {
+            camX -= 5;
+        }
+        if (sphHero.getY() > camY + 350) {
+            camY += 10;
+        }
+        if (sphHero.getY() > -300) {
+            if (sphHero.getY() < camY + 100) {
+                camY -= 20;
+            }
+        }
     }
-*/
-    //Stuff below here pretty much can be ignored, at least for now // once you get textures, make sure to dispose of them
+
     @Override
     public void resize(int width, int height) {
 
@@ -101,11 +157,41 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+       switch (keycode) {
+            case 29: //A
+                System.out.println("AAA");
+                sphHero.setVel(-5, sphHero.getVel().y);
+                isAPressed = true;
+                break;
+            case 32: //D
+                System.out.println("DDD");
+                sphHero.setVel(5, sphHero.getVel().y);
+                isDPressed = true;
+                break;
+            case 51: //W
+                System.out.println("WWW");
+                if (sphHero.getJumpState()) {
+                    sphHero.setMaxHeight();
+                    sphHero.setVel(sphHero.getVel().x, 16);
+                }
+                break;
+        }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+       switch (keycode) {
+            case 29:
+                isAPressed = false;
+                break;
+            case 32:
+                isDPressed = false;
+                break;
+            case 51:
+                sphHero.setCanJump(false);
+                break;
+        }
         return false;
     }
 
