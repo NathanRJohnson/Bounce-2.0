@@ -4,9 +4,11 @@ package cs.bounce.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.bounce.Menu.GamMain;
@@ -22,7 +24,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     Texture txBackground;
     SprHero sphHero;
     SprBackground bgBackground;
-
+    ShapeRenderer sr;
     OrthographicCamera oc = new OrthographicCamera();
 
     Boolean isAPressed;
@@ -33,7 +35,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
     float camY;
     boolean hasHit;
     ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(7);
-    private GamMain main1;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
@@ -43,6 +44,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txBackground = new Texture("barn.png");
         v2HeroStart = new Vector2(0, 200);
         sphHero = new SprHero(txJumper, v2HeroStart.x, v2HeroStart.y);
+        sr = new ShapeRenderer();
 
         ArObs.add(new ObjPlatform("dirt_floor.jpg", -400, -350, 1800, 400)); //ground
         ArObs.add(new ObjPlatform("barn_wall.png", -750, -350, 400, 1350)); //pt1
@@ -51,7 +53,9 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ArObs.add(new ObjPlatform("hay_plat_small.jpg", 350, 285, 500, 50));
         ArObs.add(new ObjPlatform("hay_plat.jpg", 850, 50, 500, 135));
         ArObs.add(new ObjObjective("seeds.png", -350, 335, 100, 100));
-      //  ArObs.add(new ObjShiftingHazard("sawblade.png", 150,50,60,60, 250,'x'));
+        ArObs.add(new ObjShiftingHazard("sawblade.png", 150, 20, 60, 60, 200, 'x'));
+       // ArObs.add(new ObjFixedHazard("sawblade.png", 150, 20, 70, 70));
+       // oshSaw = new ObjShiftingHazard("sawblade.png", 150, 20, 100, 100, 200, 'x');
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
@@ -70,28 +74,28 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        // System.out.println(sphHero.getJumpState());
-
         oc.update();
         TrackingCamera();
         batch.begin();
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         sphHero.draw(batch);
+
         for (int i = 0; i < ArObs.size(); i++) {
             ArObs.get(i).draw(batch);
+
         }
         batch.end();
         for (int i = 0; i < ArObs.size(); i++) {
+            ArObs.get(i).move();
             if (ArObs.get(i).isHit(sphHero, ArObs.get(i))) {
                 sphHero.registerHit(ArObs.get(i));
                 hasHit = true;
-                //  System.out.println(ArObs.get(i).getType());
                 if (ArObs.get(i).getType() == 1) {
                     sphHero.setPos(v2HeroStart);
                     camX = sphHero.getPos().x;
                     camY = sphHero.getPos().y;
-                    main1.updateScreen(3);
+                    main.updateScreen(2);
                 }
                 if (ArObs.get(i).getType() == 0) {
                     sphHero.setPos(v2HeroStart);
@@ -102,6 +106,15 @@ public class ScrLvl1 implements Screen, InputProcessor {
             }
 
         }
+
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        sr.setProjectionMatrix(oc.combined);
+        sr.setColor(Color.BLUE);
+        for (int i = 0; i < ArObs.size(); i++){
+
+            sr.polygon(ArObs.get(i).getVertices());
+        }
+        sr.end();
 
         if (!hasHit) {
             sphHero.applyForce(v2Gravity);
@@ -240,5 +253,3 @@ public class ScrLvl1 implements Screen, InputProcessor {
         return false;
     }
 }
-
-

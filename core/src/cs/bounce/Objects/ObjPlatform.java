@@ -3,6 +3,7 @@ package cs.bounce.Objects;
 
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 
 
 public class ObjPlatform extends SprObstacle {
@@ -30,5 +31,9 @@ public class ObjPlatform extends SprObstacle {
         if (isLeftHitting)
             return 4;
         return -1;
+    }
+    public Vector2 getPos(){
+        Vector2 v2Pos = new Vector2(fX,fY);
+        return v2Pos;
     }
 }

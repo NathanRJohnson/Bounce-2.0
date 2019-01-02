@@ -49,9 +49,6 @@ public class SprHero extends Sprite {
 
             case 2:
                 registerHit(o);
-
-            case 3:
-                isDie();
         }
 
     }
@@ -184,5 +181,3 @@ public class SprHero extends Sprite {
     }
 
 }
-
-

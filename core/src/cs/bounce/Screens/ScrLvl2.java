@@ -25,7 +25,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
     Boolean isAPressed;
     Boolean isDPressed;
     Vector2 v2Gravity, v2HeroStart, v2StartingPos;
-    float camX,camY;
+    float camX, camY;
     static float startCamX, startCamY;
     boolean hasHit;
     ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(5);
@@ -53,13 +53,13 @@ public class ScrLvl2 implements Screen, InputProcessor {
         ArObs.add(new ObjPlatform("hay_plat.jpg", -250, 50, 200, 450)); // tall start
         ArObs.add(new ObjPlatform("hay_plat.jpg", 100, 50, 400, 200)); // 2nd block
         ArObs.add(new ObjPlatform("hay_plat.jpg", 600, 50, 300, 350)); // third
-        ArObs.add(new ObjFixedHazard("spikes.png",-350, 50, 100, 40)); //left most spikes
+        ArObs.add(new ObjFixedHazard("spikes.png", -350, 50, 100, 40)); //left most spikes
         ArObs.add(new ObjFixedHazard("spikes.png", -50, 50, 150, 40)); //between tall and 2nd
-        ArObs.add(new ObjFixedHazard("spikes.png",220, 250, 80, 40)); // on second
-        ArObs.add(new ObjFixedHazard("spikes.png",500, 50, 100, 40)); // between second and third
-        ArObs.add(new ObjFixedHazard("spikes.png",725, 400, 80, 40)); // on third
-        ArObs.add(new ObjFixedHazard("spikes.png",900, 50, 175, 40)); // before objective
-        ArObs.add(new ObjObjective("seeds.png", 1250, 50, 100,100));
+        ArObs.add(new ObjFixedHazard("spikes.png", 220, 250, 80, 40)); // on second
+        ArObs.add(new ObjFixedHazard("spikes.png", 500, 50, 100, 40)); // between second and third
+        ArObs.add(new ObjFixedHazard("spikes.png", 725, 400, 80, 40)); // on third
+        ArObs.add(new ObjFixedHazard("spikes.png", 900, 50, 175, 40)); // before objective
+        ArObs.add(new ObjObjective("seeds.png", 1250, 50, 100, 100));
 
     }
 
@@ -161,6 +161,9 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
+        for (int i = 0; i < ArObs.size(); i++) {
+            ArObs.get(i).getTexture().dispose();
+        }
     }
 
     @Override
