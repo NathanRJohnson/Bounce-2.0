@@ -61,7 +61,7 @@ public class SprHero extends Sprite {
 
     public boolean isWin(SprObstacle o) {
         ObjObjective w = new ObjObjective(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
-        setPos(0, 0);
+        setPos(0, 0); //need a set location????
         return true;
     }
 

@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import cs.bounce.Menu.GamMain;
-import cs.bounce.Objects.ObjPlatform;
-import cs.bounce.Objects.SprBackground;
-import cs.bounce.Objects.SprHero;
-import cs.bounce.Objects.SprObstacle;
+import cs.bounce.Objects.*;
 
 import java.util.ArrayList;
 
@@ -28,10 +25,10 @@ public class ScrLvl2 implements Screen, InputProcessor {
     Boolean isAPressed;
     Boolean isDPressed;
     Vector2 v2Gravity, v2HeroStart, v2StartingPos;
-    float camX;
-    float camY;
+    float camX,camY;
+    static float startCamX, startCamY;
     boolean hasHit;
-    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(3);
+    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(5);
 
     public ScrLvl2(GamMain _main) {
         main = _main;
@@ -39,7 +36,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         oc.setToOrtho(false, 1000, 800);
         txJumper = new Texture("dinner_sprite.png");
         txBackground = new Texture("barn.png");
-        v2HeroStart = new Vector2(0, 200);
+        v2HeroStart = new Vector2(-210, 450);
         sphHero = new SprHero(txJumper, v2HeroStart.x, v2HeroStart.y);
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;
@@ -47,11 +44,22 @@ public class ScrLvl2 implements Screen, InputProcessor {
         v2Gravity = new Vector2(0, -1);
         camX = sphHero.getX();
         camY = sphHero.getY();
+        startCamX = camX;
+        startCamY = camY;
 
         ArObs.add(new ObjPlatform("dirt_floor.jpg", -400, -350, 1800, 400)); //ground
         ArObs.add(new ObjPlatform("barn_wall.png", -750, -350, 400, 1350)); //wall 1
         ArObs.add(new ObjPlatform("barn_wall.png", 1350, -350, 400, 1350)); //wall 2
-
+        ArObs.add(new ObjPlatform("hay_plat.jpg", -250, 50, 200, 450)); // tall start
+        ArObs.add(new ObjPlatform("hay_plat.jpg", 100, 50, 400, 200)); // 2nd block
+        ArObs.add(new ObjPlatform("hay_plat.jpg", 600, 50, 300, 350)); // third
+        ArObs.add(new ObjFixedHazard("spikes.png",-350, 50, 100, 40)); //left most spikes
+        ArObs.add(new ObjFixedHazard("spikes.png", -50, 50, 150, 40)); //between tall and 2nd
+        ArObs.add(new ObjFixedHazard("spikes.png",220, 250, 80, 40)); // on second
+        ArObs.add(new ObjFixedHazard("spikes.png",500, 50, 100, 40)); // between second and third
+        ArObs.add(new ObjFixedHazard("spikes.png",725, 400, 80, 40)); // on third
+        ArObs.add(new ObjFixedHazard("spikes.png",900, 50, 175, 40)); // before objective
+        ArObs.add(new ObjObjective("seeds.png", 1250, 50, 100,100));
 
     }
 
@@ -69,7 +77,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
         batch.setProjectionMatrix(oc.combined);
         bgBackground.draw(batch);
         sphHero.draw(batch);
-        for (int i = 0; i < ArObs.size(); i++){
+        for (int i = 0; i < ArObs.size(); i++) {
             ArObs.get(i).draw(batch);
         }
         batch.end();
@@ -79,15 +87,15 @@ public class ScrLvl2 implements Screen, InputProcessor {
                 sphHero.registerHit(ArObs.get(i));
                 hasHit = true;
                 if (ArObs.get(i).getType() == 1) {
-                    sphHero.setPos(v2HeroStart);
-                    camX = sphHero.getPos().x;
-                    camY = sphHero.getPos().y;
-                    main.updateScreen(2);
+                    sphHero.setPos(v2HeroStart.x, v2HeroStart.y);
+                    camX = startCamX;
+                    camY = startCamY;
+                    main.updateScreen(3);
                 }
                 if (ArObs.get(i).getType() == 0) {
                     sphHero.setPos(v2HeroStart);
-                    camX = sphHero.getPos().x;
-                    camY = sphHero.getPos().y;
+                    camX = startCamX;
+                    camY = startCamY;
                     main.updateScreen(1);
                 }
             }
@@ -157,7 +165,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-       switch (keycode) {
+        switch (keycode) {
             case 29: //A
                 System.out.println("AAA");
                 sphHero.setVel(-5, sphHero.getVel().y);
@@ -181,7 +189,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-       switch (keycode) {
+        switch (keycode) {
             case 29:
                 isAPressed = false;
                 break;
