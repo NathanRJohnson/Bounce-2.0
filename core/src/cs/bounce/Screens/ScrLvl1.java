@@ -51,6 +51,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ArObs.add(new ObjPlatform("hay_plat_small.jpg", 350, 285, 500, 50));
         ArObs.add(new ObjPlatform("hay_plat.jpg", 850, 50, 500, 135));
         ArObs.add(new ObjObjective("seeds.png", -350, 335, 100, 100));
+      //  ArObs.add(new ObjShiftingHazard("sawblade.png", 150,50,60,60, 250,'x'));
 
         bgBackground = new SprBackground(txBackground);
         isAPressed = false;

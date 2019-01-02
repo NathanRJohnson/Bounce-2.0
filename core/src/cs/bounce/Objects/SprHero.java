@@ -45,16 +45,18 @@ public class SprHero extends Sprite {
                 isWin(o);
 
             case 1:
-                isDie(o);
+                isDie();
 
             case 2:
                 registerHit(o);
+
+            case 3:
+                isDie();
         }
 
     }
 
-    public boolean isDie(SprObstacle o) {
-        ObjFixedHazard h = new ObjFixedHazard(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
+    public boolean isDie() {
         setPos(0, 0);
         return true;
     }
