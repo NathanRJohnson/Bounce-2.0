@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class ObjShiftingHazard extends SprObstacle {
     private char cRangeType;
     private float fStartRange, fEndRange;
-    private int nDir;
+    private int nDir = 0;
     private Vector2 v2Vel;
 
     public ObjShiftingHazard(String sFile, float _fX, float fY, float fW, float fH, float fRange, char _cRangeType) {
@@ -25,9 +25,7 @@ public class ObjShiftingHazard extends SprObstacle {
     public void move() {
         setPosition(v2Pos.x, v2Pos.y);
         v2Pos.add(v2Vel);
-        System.out.println(v2Pos.x + "   " + fEndRange + "   " + nDir);
         switch (cRangeType) {
-
             case 'x':
                 if (v2Pos.x <= fStartRange) {
                     nDir = 1;

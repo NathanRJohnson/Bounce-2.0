@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.bounce.Menu.GamMain;
 import cs.bounce.Objects.*;
 
@@ -34,7 +33,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
     float camX;
     float camY;
     boolean hasHit;
-    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(7);
+    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(9);
 
     public ScrLvl1(GamMain _main) {
         main = _main;
@@ -53,8 +52,8 @@ public class ScrLvl1 implements Screen, InputProcessor {
         ArObs.add(new ObjPlatform("hay_plat_small.jpg", 350, 285, 500, 50));
         ArObs.add(new ObjPlatform("hay_plat.jpg", 850, 50, 500, 135));
         ArObs.add(new ObjObjective("seeds.png", -350, 335, 100, 100));
-        ArObs.add(new ObjShiftingHazard("sawblade.png", 150, 20, 60, 60, 200, 'x'));
-       // ArObs.add(new ObjFixedHazard("sawblade.png", 150, 20, 70, 70));
+       // ArObs.add(new ObjShiftingHazard("sawblade.png", 150, 20, 60, 60, 200, 'x'));
+        ArObs.add(new ObjFixedHazard("sawblade.png", 150, 20, 70, 70));
        // oshSaw = new ObjShiftingHazard("sawblade.png", 150, 20, 100, 100, 200, 'x');
 
         bgBackground = new SprBackground(txBackground);
@@ -112,7 +111,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
         sr.setColor(Color.BLUE);
         for (int i = 0; i < ArObs.size(); i++){
 
-            sr.polygon(ArObs.get(i).getVertices());
+            sr.polygon(ArObs.get(i).getPolygon().getVertices());
         }
         sr.end();
 

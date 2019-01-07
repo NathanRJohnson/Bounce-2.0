@@ -26,10 +26,7 @@ public class SprObstacle extends Sprite {
         fW = _fW;
         fH = _fH;
         setSize(fW, fH);
-        plyObstacle = new Polygon(new float[]{  v2Pos.x, v2Pos.y,
-                v2Pos.x + fW, v2Pos.y,
-                v2Pos.x + fW, v2Pos.y + fH,
-                v2Pos.x, v2Pos.y + fH
+        plyObstacle = new Polygon(new float[]{ 0,0,0,0,0,0,0,0
                 //fX, fY + fH, fX + fW, fY + fH, fX + fW, fY, fX, fY
         });
     }
@@ -55,11 +52,11 @@ public class SprObstacle extends Sprite {
     }
 
     public void move() {
-      /*  plyObstacle.setVertices(new float[] {v2Pos.x, v2Pos.y,
+        plyObstacle.setVertices(new float[] {
+                v2Pos.x, v2Pos.y,
                 v2Pos.x + fW, v2Pos.y,
                 v2Pos.x + fW, v2Pos.y + fH,
-                v2Pos.x, v2Pos.y + fH} );*/
-        v2Pos.add(v2Vel);
+                v2Pos.x, v2Pos.y + fH});
     }
 
     public int getType() {
