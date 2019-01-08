@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import cs.bounce.Menu.GamMain;
-import cs.bounce.Screens.ScrLevels;
-import cs.bounce.Screens.ScrLvl1;
 
 public class SprHero extends Sprite {
     private Vector2 v2Pos, v2Vel, v2Acc, v2Start;
