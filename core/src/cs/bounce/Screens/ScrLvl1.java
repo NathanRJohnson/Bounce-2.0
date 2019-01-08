@@ -33,7 +33,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
     float camY;
     boolean hasHit;
     ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(7);
-    private GamMain main1;
 
     public ScrLvl1(GamMain _main) {
         main = _main;
@@ -43,7 +42,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
         txBackground = new Texture("barn.png");
         v2HeroStart = new Vector2(0, 200);
         sphHero = new SprHero(txJumper, v2HeroStart.x, v2HeroStart.y);
-
         ArObs.add(new ObjPlatform("dirt_floor.jpg", -400, -350, 1800, 400)); //ground
         ArObs.add(new ObjPlatform("barn_wall.png", -750, -350, 400, 1350)); //pt1
         ArObs.add(new ObjPlatform("barn_wall.png", 1350, -350, 400, 1350)); //pt2
@@ -90,7 +88,7 @@ public class ScrLvl1 implements Screen, InputProcessor {
                     sphHero.setPos(v2HeroStart);
                     camX = sphHero.getPos().x;
                     camY = sphHero.getPos().y;
-                    main1.updateScreen(3);
+                    main.updateScreen(3);
                 }
                 if (ArObs.get(i).getType() == 0) {
                     sphHero.setPos(v2HeroStart);
@@ -170,7 +168,6 @@ public class ScrLvl1 implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("mm");
         switch (keycode) {
             case 29: //A
                 sphHero.setVel(-5, sphHero.getVel().y);
