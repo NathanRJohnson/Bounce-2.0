@@ -41,7 +41,7 @@ public class SprObstacle extends Sprite {
 
     public boolean isHit(SprHero s, SprObstacle o) {
         if (Intersector.overlapConvexPolygons(s.getPolygon(), o.getPolygon())) {
-            s.getHitType(getType(), o);
+            s.handleHitType(getType(), o);
             return true;
         }
         return false;

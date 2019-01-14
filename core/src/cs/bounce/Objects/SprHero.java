@@ -37,38 +37,22 @@ public class SprHero extends Sprite {
         v2Pos.add(v2Vel);
         v2Vel.add(v2Acc);
         v2Acc.setZero();
-
     }
-    public void getHitType(int nHitType, SprObstacle o) {
+
+    public void handleHitType(int nHitType, SprObstacle o) {
         switch (nHitType) {
-            case 0:
-                isWin(o);
-
-            case 1:
-                isDie(o);
-
-            case 2:
+            case 0: //Win
+                // Handled in Render
+            case 1: //Die
+                //  Handled in Render
+            case 2:// Platform
                 registerHit(o);
         }
-
-    }
-
-    public boolean isDie(SprObstacle o) {
-        ObjFixedHazard h = new ObjFixedHazard(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
-        setPos(0, 0);
-        return true;
-    }
-
-    public boolean isWin(SprObstacle o) {
-        ObjObjective w = new ObjObjective(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
-        setPos(0, 0); //need a set location????
-        return true;
     }
 
     public void registerHit(SprObstacle o) {
         ObjPlatform p = new ObjPlatform(o.getFile(), o.getX(), o.getY(), o.getWidth(), o.getHeight());
         int n = p.sideCheck(plyHero);
-
         if (!canJump && n == 1) {
             if (p.getTopRight().y != 0) {
                 setPos(v2Pos.x, p.getTopRight().y - 15);

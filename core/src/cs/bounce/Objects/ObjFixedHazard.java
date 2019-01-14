@@ -1,8 +1,5 @@
 package cs.bounce.Objects;
 
-import com.badlogic.gdx.math.Intersector;
-
-
 public class ObjFixedHazard extends SprObstacle {
 
     public ObjFixedHazard(String sFile, float fX, float fY, float fW, float fH) {
