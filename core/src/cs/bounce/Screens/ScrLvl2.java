@@ -28,7 +28,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
     float camX,camY;
     static float startCamX, startCamY;
     boolean hasHit;
-    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(5);
+    ArrayList<SprObstacle> ArObs = new ArrayList<SprObstacle>(13);
 
     public ScrLvl2(GamMain _main) {
         main = _main;
@@ -70,7 +70,8 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        oc.update();
+        oc.update(); //https://github.com/calebjanhunen/SplashShot/blob/scratch/HitDetection/core/src/project/splash/ScrPlay.java
+
         TrackingCamera();
 
         batch.begin();
@@ -121,7 +122,7 @@ public class ScrLvl2 implements Screen, InputProcessor {
 
     }
 
-    private void TrackingCamera() {
+    private void TrackingCamera() { //https://stackoverflow.com/questions/24534159/how-do-i-make-the-camera-follow-the-player-in-libgdx
         oc.position.set(camX, camY + 300, 0);
         if (sphHero.getX() > camX + 75) {
             camX += 5;
@@ -160,7 +161,8 @@ public class ScrLvl2 implements Screen, InputProcessor {
     }
 
     @Override
-    public void dispose() {
+    public void dispose() {//https://github.com/libgdx/libgdx/wiki/Memory-management
+        
     }
 
     @Override

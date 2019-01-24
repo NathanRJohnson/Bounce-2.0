@@ -47,7 +47,7 @@ public class SprObstacle extends Sprite {
         return false;
     }
 
-    public int getType() {
+    public int getType(){
         return nType;
     }
 

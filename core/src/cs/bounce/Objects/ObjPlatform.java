@@ -15,7 +15,7 @@ public class ObjPlatform extends SprObstacle {
     }
 
 
-    public int sideCheck(Polygon p) {
+    public int sideCheck(Polygon p) { //https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Intersector.html
         isTopHitting = Intersector.intersectSegmentPolygon(getTopRight(), getTopLeft(), p);
         isBotHitting = Intersector.intersectSegmentPolygon(getBotRight(), getBotLeft(), p);
         isLeftHitting = Intersector.intersectSegmentPolygon(getTopLeft(), getBotLeft(), p);
